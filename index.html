@@ -25,7 +25,8 @@ body{
   background:linear-gradient(135deg,var(--bg-start),var(--bg-end));
   background-size:400% 400%;
   animation:bgMove 12s ease infinite;
-  color:var(--text-dark);min-height:100vh;
+  color:var(--text-dark);
+  min-height:100vh;
   user-select:none;-webkit-user-select:none;
   -webkit-tap-highlight-color:transparent;
 }
@@ -42,65 +43,64 @@ body{
 .balance-card{
   background:var(--card-bg);
   border-radius:25px;
-  padding:30px 22px;
-  margin-bottom:30px;
+  padding:20px 18px;
+  margin-bottom:20px;
   box-shadow:0 12px 40px rgba(0,0,0,0.25);
   backdrop-filter:blur(14px);
   text-align:center;
   border:1px solid var(--card-border);
-  transition:transform 0.3s;
+  pointer-events:none;
 }
-.balance-card:hover{transform:scale(1.02);}
-.balance-card h3{font-size:18px;color:var(--accent);margin-bottom:10px;letter-spacing:0.5px;}
-.balance-card .amount{font-size:40px;font-weight:700;margin-top:5px;color:var(--text-dark);text-shadow:0 2px 5px rgba(0,0,0,0.1);}
-.balance-card .usd{font-size:16px;color:#555;margin-top:5px;}
+.balance-card h3{font-size:16px;color:var(--accent);margin-bottom:8px;letter-spacing:0.5px;}
+.balance-card .amount{font-size:32px;font-weight:700;margin-top:5px;color:var(--text-dark);text-shadow:0 2px 5px rgba(0,0,0,0.1);}
+.balance-card .usd{font-size:14px;color:#555;margin-top:4px;}
 
 .ad-card, .task-card{
   background:var(--card-bg);
-  border-radius:25px;
-  padding:28px;
+  border-radius:20px;
+  padding:18px 16px;
   text-align:center;
-  box-shadow:0 10px 38px rgba(0,0,0,0.3);
-  backdrop-filter:blur(15px);
+  box-shadow:0 8px 30px rgba(0,0,0,0.25);
+  backdrop-filter:blur(12px);
   border:1px solid var(--card-border);
-  margin-bottom:20px;
+  margin-bottom:12px;
 }
-.ad-card h2, .task-card h2{font-size:22px;color:var(--text-dark);margin-bottom:10px;}
-.ad-card p, .task-card p{margin:6px 0;color:var(--text-dark);font-size:15px;}
-.stats{display:flex;justify-content:space-around;margin-top:16px;}
-.stat{background:rgba(0,0,0,0.05);border-radius:14px;padding:12px 25px;}
-.stat span{display:block;font-size:20px;font-weight:700;color:var(--text-dark);}
-.stat label{font-size:13px;color:#666;}
-.progress{height:10px;background:rgba(0,0,0,0.08);border-radius:8px;overflow:hidden;margin-top:16px;}
+.ad-card h2, .task-card h2{font-size:18px;color:var(--text-dark);margin-bottom:6px;}
+.ad-card p, .task-card p{margin:4px 0;color:var(--text-dark);font-size:13px;}
+.stats{display:flex;justify-content:space-around;margin-top:12px;}
+.stat{background:rgba(0,0,0,0.05);border-radius:10px;padding:8px 16px;}
+.stat span{display:block;font-size:16px;font-weight:700;color:var(--text-dark);}
+.stat label{font-size:11px;color:#666;}
+.progress{height:8px;background:rgba(0,0,0,0.08);border-radius:6px;overflow:hidden;margin-top:12px;}
 .progress-fill{height:100%;background:#4ADE80;width:0%;transition:width .4s;}
 
 .ad-btn, .task-card button{
   width:100%;
-  margin-top:20px;
-  padding:16px;
-  font-size:17px;
+  margin-top:12px;
+  padding:12px;
+  font-size:15px;
   font-weight:700;
   border:none;
-  border-radius:16px;
+  border-radius:14px;
   color:var(--text-light);
   cursor:pointer;
   transition:0.3s;
 }
 .ad-btn{
   background:linear-gradient(90deg,var(--btn-gradient-start),var(--btn-gradient-end));
-  box-shadow:0 0 18px var(--btn-shadow);
+  box-shadow:0 0 16px var(--btn-shadow);
 }
-.ad-btn:hover:not(.waiting){transform:scale(1.05);box-shadow:0 0 25px var(--btn-shadow);}
-.task-card button{background:linear-gradient(90deg,#f7971e,#ffd200);box-shadow:0 0 18px rgba(255,210,50,0.4);}
-.task-card button:hover{transform:scale(1.05);box-shadow:0 0 25px rgba(255,210,50,0.6);}
+.ad-btn:hover:not(.waiting){transform:scale(1.03);box-shadow:0 0 20px var(--btn-shadow);}
+.task-card button{background:linear-gradient(90deg,#f7971e,#ffd200);box-shadow:0 0 16px rgba(255,210,50,0.4);}
+.task-card button:hover{transform:scale(1.03);box-shadow:0 0 20px rgba(255,210,50,0.6);}
 .task-card button.completed{background:gray !important;box-shadow:none !important;cursor:not-allowed !important;pointer-events:none !important;opacity:0.55;}
 
 .menu{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);width:92%;display:flex;justify-content:space-around;background:rgba(255,255,255,0.15);padding:10px;border-radius:20px;box-shadow:0 6px 20px rgba(0,0,0,.3);}
-.menu button{flex:1;margin:0 5px;padding:12px;border:none;border-radius:14px;background:linear-gradient(90deg,#36D1DC,#5B86E5);color:#fff;font-weight:700;transition:0.3s;}
+.menu button{flex:1;margin:0 5px;padding:10px;border:none;border-radius:14px;background:linear-gradient(90deg,#36D1DC,#5B86E5);color:#fff;font-weight:700;transition:0.3s;}
 .menu button.active{background:linear-gradient(90deg,#f7971e,#ffd200);box-shadow:0 0 15px rgba(255,210,50,0.6);}
 
-.method-list{display:flex;flex-direction:column;gap:10px;margin:12px 0;}
-.method{padding:12px;border-radius:14px;background:linear-gradient(90deg,#36D1DC,#5B86E5);color:#fff;text-align:center;font-weight:700;cursor:pointer;}
+.method-list{display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.method{padding:10px;border-radius:12px;background:linear-gradient(90deg,#36D1DC,#5B86E5);color:#fff;text-align:center;font-weight:700;cursor:pointer;}
 
 #form{display:none;margin-top:10px;}
 #form input{width:100%;padding:10px;margin:6px 0;border-radius:10px;border:1px solid #ccc;}
@@ -112,12 +112,15 @@ body{
 </head>
 <body>
 <div class="container">
+
   <!-- Reklam səhifəsi -->
   <div id="adsPage" class="page active">
     <div class="balance-card">
       <h3>Balansınız</h3>
       <div class="amount"><span id="balance">0.0000</span> ₼</div>
+      <div class="usd">$<span id="balanceUSD">0.0000</span> USDT</div>
     </div>
+
     <div class="ad-card">
       <h2>Günlük Reklamlar</h2>
       <p>Hər reklama görə <b>0.002 ₼</b> qazanın</p>
@@ -144,6 +147,11 @@ body{
       <p>Qrupa qoşul və <b>0.1 ₼</b> qazan!</p>
       <button id="joinBtn2">Kanala Qoşul</button>
     </div>
+    <div class="task-card">
+      <h2>Bonus Tapşırıq </h2>
+      <p>Kanala qoşul və <b>0.15 ₼</b> qazan!</p>
+      <button id="joinBtn3">Kanala Qoşul</button>
+    </div>
   </div>
 
   <!-- Cüzdan -->
@@ -151,6 +159,7 @@ body{
     <div class="balance-card">
       <h3>Balansınız</h3>
       <div class="amount"><span id="balance2">0.0000</span> ₼</div>
+      <div class="usd">$<span id="balanceUSD2">0.0000</span> USDT</div>
     </div>
     <h2 style="text-align:center;margin-bottom:12px;color:#f0f9ff;">Çıxarış</h2>
     <div class="method-list" id="methods">
@@ -169,6 +178,7 @@ body{
       <div id="alert" class="alert"></div>
     </div>
   </div>
+
 </div>
 
 <div class="menu">
@@ -178,71 +188,81 @@ body{
 </div>
 
 <script>
-const LIMIT=100,REWARD=0.002;
-const BAL_KEY='bal',COUNT_KEY='cnt',RESET_KEY='resetTime',JOIN_KEY='joined',JOIN_KEY2='joined2';
-function safeGet(k,d=0){try{return JSON.parse(localStorage.getItem(k))??d;}catch{return d;}
-}
+const LIMIT = 100, REWARD = 0.002;
+const BAL_KEY = 'bal', COUNT_KEY = 'cnt', RESET_KEY = 'resetTime', JOIN_KEY = 'joined', JOIN_KEY2 = 'joined2', JOIN_KEY3 = 'joined3';
+
+function safeGet(k,d=0){try{return JSON.parse(localStorage.getItem(k))??d;}catch{return d;}}
 function safeSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 
-let bal=parseFloat(safeGet(BAL_KEY,0));
-let cnt=parseInt(safeGet(COUNT_KEY,0));
-let resetTime=safeGet(RESET_KEY,null);
+let bal = parseFloat(safeGet(BAL_KEY,0));
+let cnt = parseInt(safeGet(COUNT_KEY,0));
+let resetTime = safeGet(RESET_KEY,null);
+
 function getNextResetTime(){
-  const now=new Date();
-  const AZ_OFFSET=4;
-  let resetUTC=new Date(Date.UTC(
-    now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate(),
+  const now = new Date();
+  const AZ_OFFSET = 4;
+  let resetUTC = new Date(Date.UTC(
+    now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),
     23-AZ_OFFSET,0,0,0
   ));
-  if(now.getTime()>resetUTC.getTime()){resetUTC.setUTCDate(resetUTC.getUTCDate()+1);}
+  if(now.getTime() > resetUTC.getTime()){ resetUTC.setUTCDate(resetUTC.getUTCDate()+1);}
   return resetUTC.getTime();
 }
-if(!resetTime||Date.now()>resetTime){cnt=0;resetTime=getNextResetTime();safeSet(RESET_KEY,resetTime);safeSet(COUNT_KEY,cnt);}
+
+if(!resetTime || Date.now() > resetTime){
+  cnt = 0;
+  resetTime = getNextResetTime();
+  safeSet(RESET_KEY, resetTime);
+  safeSet(COUNT_KEY, cnt);
+}
+
+// Update funksiyası həm AZN həm USDT balansını yeniləyir
 function update(){
-  document.getElementById('balance').textContent=bal.toFixed(4);
-  document.getElementById('balance2').textContent=bal.toFixed(4);
-  document.getElementById('adsCount').textContent=cnt;
-  document.getElementById('progress').style.width=(cnt/LIMIT*100)+'%';
-  document.getElementById('progressText').textContent=`${cnt}/${LIMIT}`;
-  safeSet(BAL_KEY,bal);safeSet(COUNT_KEY,cnt);
+  document.getElementById('balance').textContent = bal.toFixed(4);
+  document.getElementById('balance2').textContent = bal.toFixed(4);
+  const usdt = bal / 1.7; // 1 USDT = 1.7 AZN
+  document.getElementById('balanceUSD').textContent = usdt.toFixed(4);
+  document.getElementById('balanceUSD2').textContent = usdt.toFixed(4);
+  document.getElementById('adsCount').textContent = cnt;
+  document.getElementById('progress').style.width = (cnt/LIMIT*100)+'%';
+  document.getElementById('progressText').textContent = `${cnt}/${LIMIT}`;
+  safeSet(BAL_KEY, bal);
+  safeSet(COUNT_KEY, cnt);
 }
 update();
 
 /* Reklam düyməsi */
-const adBtn=document.getElementById('adBtn'),msg=document.getElementById('msg');
-adBtn.onclick=()=>{
-  if(cnt>=LIMIT){ msg.textContent='📣 Gündəlik limitə çatdınız!'; return; }
+const adBtn = document.getElementById('adBtn'), msg = document.getElementById('msg');
+adBtn.onclick = () => {
+  if(cnt >= LIMIT){ msg.textContent='📣 Gündəlik limitə çatdınız!'; return; }
   adBtn.disabled=true;
   adBtn.classList.add('waiting');
   msg.textContent='İzlənir...';
   try{ if(typeof show_10024800==='function'){ show_10024800(); } }catch(e){}
   setTimeout(()=>{
-    bal+=REWARD;cnt++;update();
+    bal += REWARD; cnt++; update();
     msg.textContent='✅ +0.002 ₼ əlavə olundu!';
-    let s=10;
-    const t=setInterval(()=>{
+    let s = 10;
+    const t = setInterval(()=>{
       msg.textContent=`⏳ ${s}s gözləyin`;
       s--;
-      if(s<0){clearInterval(t);adBtn.disabled=false;adBtn.classList.remove('waiting');msg.textContent='';}
+      if(s<0){clearInterval(t); adBtn.disabled=false; adBtn.classList.remove('waiting'); msg.textContent='';}
     },1000);
   },2500);
 };
 
 /* Tapşırıqlar */
 const joinBtn=document.getElementById('joinBtn');
-if(localStorage.getItem(JOIN_KEY)){joinBtn.textContent='Tamamlandı';joinBtn.classList.add('completed');joinBtn.disabled=true;}
-joinBtn.onclick=()=>{
-  if(localStorage.getItem(JOIN_KEY))return;bal+=0.1; safeSet(BAL_KEY,bal);
-  localStorage.setItem(JOIN_KEY,'1');joinBtn.textContent='Tamamlandı';joinBtn.classList.add('completed');joinBtn.disabled=true;
-  window.open('https://t.me/qazancazicmasi','_blank');update();
-};
+if(localStorage.getItem(JOIN_KEY)){joinBtn.textContent='Tamamlandı';joinBtn.classList.add('completed'); joinBtn.disabled=true;}
+joinBtn.onclick=()=>{if(localStorage.getItem(JOIN_KEY)) return; bal+=0.1; safeSet(BAL_KEY,bal); localStorage.setItem(JOIN_KEY,'1'); joinBtn.textContent='Tamamlandı'; joinBtn.classList.add('completed'); joinBtn.disabled=true; window.open('https://t.me/qazancazicmasi','_blank'); update();}
+
 const joinBtn2=document.getElementById('joinBtn2');
-if(localStorage.getItem(JOIN_KEY2)){joinBtn2.textContent='Tamamlandı';joinBtn2.classList.add('completed');joinBtn2.disabled=true;}
-joinBtn2.onclick=()=>{
-  if(localStorage.getItem(JOIN_KEY2))return;bal+=0.1; safeSet(BAL_KEY,bal);
-  localStorage.setItem(JOIN_KEY2,'1');joinBtn2.textContent='Tamamlandı';joinBtn2.classList.add('completed');joinBtn2.disabled=true;
-  window.open('https://t.me/qazancazchat','_blank');update();
-};
+if(localStorage.getItem(JOIN_KEY2)){joinBtn2.textContent='Tamamlandı';joinBtn2.classList.add('completed'); joinBtn2.disabled=true;}
+joinBtn2.onclick=()=>{if(localStorage.getItem(JOIN_KEY2)) return; bal+=0.1; safeSet(BAL_KEY,bal); localStorage.setItem(JOIN_KEY2,'1'); joinBtn2.textContent='Tamamlandı'; joinBtn2.classList.add('completed'); joinBtn2.disabled=true; window.open('https://t.me/qazancazchat','_blank'); update();}
+
+const joinBtn3=document.getElementById('joinBtn3');
+if(localStorage.getItem(JOIN_KEY3)){joinBtn3.textContent='Tamamlandı';joinBtn3.classList.add('completed'); joinBtn3.disabled=true;}
+joinBtn3.onclick=()=>{if(localStorage.getItem(JOIN_KEY3)) return; bal+=0.15; safeSet(BAL_KEY,bal); localStorage.setItem(JOIN_KEY3,'1'); joinBtn3.textContent='Tamamlandı'; joinBtn3.classList.add('completed'); joinBtn3.disabled=true; window.open('https://t.me/turaldevelopers','_blank'); update();}
 
 /* Page navigation */
 function showPage(id,btn){
@@ -277,27 +297,35 @@ document.getElementById('backBtn').onclick=()=>{
 };
 
 document.getElementById('withdrawBtn').onclick=()=>{
-  const det=details.value.trim();
-  const amt=parseFloat(amount.value);
-  alertBox.style.display='none';
-  if(!type){showErr('Metod seçin');return;}
-  if(!det){showErr('Detalları daxil edin');return;}
-  if(isNaN(amt)||amt<=0){showErr('Məbləği düzgün daxil edin');return;}
-  if(amt<min[type]){showErr(`Minimum məbləğ ${min[type]} AZN`);return;}
-  if(amt>bal){showErr('Balans kifayət etmir');return;}
-  bal-=amt; safeSet(BAL_KEY,bal);update();
-  alertBox.textContent='✅ Çıxarış göndərildi!';
-  alertBox.className='alert success';
-  alertBox.style.display='block';
-  form.style.display='none';
-  document.getElementById('methods').style.display='flex';
+  const det = details.value.trim();
+  const amt = parseFloat(amount.value);
+  alertBox.style.display = 'none';
+
+  if(!type){ showErr('Metod seçin'); return; }
+  if(!det){ showErr('Detalları daxil edin'); return; }
+  if(isNaN(amt) || amt <= 0){ showErr('Məbləği düzgün daxil edin'); return; }
+  if(amt < min[type]){ showErr(`Minimum məbləğ ${min[type]} AZN`); return; }
+  if(amt > bal){ showErr('Balans kifayət etmir'); return; }
+
+  // Balansı çıxmaq
+  bal -= amt;
+  safeSet(BAL_KEY, bal);
+  update();
+
+  alertBox.textContent = '✅ Çıxarış göndərildi!';
+  alertBox.className = 'alert success';
+  alertBox.style.display = 'block';
+
+  // Formu bağla
+  form.style.display = 'none';
+  document.getElementById('methods').style.display = 'flex';
 };
 
 function showErr(msg){
-  alertBox.textContent=msg;
-  alertBox.className='alert error';
-  alertBox.style.display='block';
+  alertBox.textContent = msg;
+  alertBox.className = 'alert error';
+  alertBox.style.display = 'block';
 }
 </script>
 </body>
-  </html>
+</html>
