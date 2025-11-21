@@ -193,7 +193,7 @@ body{
 </div>
 
 <script>
-const LIMIT = 100, REWARD = 0.005; // qazanc artırıldı
+const LIMIT = 100, REWARD = 0.005;
 const BAL_KEY = 'bal', COUNT_KEY = 'cnt', RESET_KEY = 'resetTime';
 const JOIN_KEY = 'joined', JOIN_KEY2 = 'joined2', JOIN_KEY3 = 'joined3', JOIN_KEY4='joined4';
 
@@ -236,23 +236,40 @@ function update(){
 }
 update();
 
-/* Reklam düyməsi */
+/* Reklam düyməsi interaktiv timer ilə */
 const adBtn = document.getElementById('adBtn'), msg = document.getElementById('msg');
 adBtn.onclick = () => {
   if(cnt >= LIMIT){ msg.textContent='📣 Gündəlik limitə çatdınız!'; return; }
-  adBtn.disabled=true;
+  
+  adBtn.disabled = true;
   adBtn.classList.add('waiting');
-  msg.textContent='İzlənir...';
+  msg.innerHTML = `<span>İzlənir...</span><div id="timerBar" style="height:6px;width:0%;background:#4ade80;border-radius:4px;margin-top:6px;transition:width 1s;"></div>`;
+  
   try{ if(typeof show_10024800==='function'){ show_10024800(); } }catch(e){}
+
   setTimeout(()=>{
-    bal += REWARD; cnt++; update();
-    msg.textContent='✅ +0.005 ₼ əlavə olundu!';
+    bal += REWARD; 
+    cnt++; 
+    update();
+    msg.innerHTML = '✅ +0.005 ₼ əlavə olundu!';
+
     let s = 10;
     const t = setInterval(()=>{
-      msg.textContent=`⏳ ${s}s gözləyin`;
       s--;
-      if(s<0){clearInterval(t); adBtn.disabled=false; adBtn.classList.remove('waiting'); msg.textContent='';}
+      const timerBar = document.getElementById('timerBar');
+      if(timerBar){
+        timerBar.style.width = `${(10-s)/10*100}%`;
+        timerBar.style.background = `hsl(${(10-s)*36}, 80%, 50%)`;
+      }
+      msg.innerHTML = `⏳ ${s}s gözləyin<div id="timerBar" style="height:6px;width:${(10-s)/10*100}%;background:hsl(${(10-s)*36},80%,50%);border-radius:4px;margin-top:6px;"></div>`;
+      if(s <= 0){
+        clearInterval(t);
+        adBtn.disabled=false;
+        adBtn.classList.remove('waiting');
+        msg.textContent='';
+      }
     },1000);
+
   },2500);
 };
 
