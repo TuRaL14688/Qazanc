@@ -148,9 +148,14 @@ body{
       <button id="joinBtn2">Kanala Qoşul</button>
     </div>
     <div class="task-card">
-      <h2>Bonus Tapşırıq </h2>
+      <h2>Bonus Tapşırıq</h2>
       <p>Kanala qoşul və <b>0.15 ₼</b> qazan!</p>
       <button id="joinBtn3">Kanala Qoşul</button>
+    </div>
+    <div class="task-card">
+      <h2>Sponsor Tapşırıq</h2>
+      <p>Kanala qoşul və <b>0.05 ₼</b> qazan!</p>
+      <button id="joinBtn4">Kanala Qoşul</button>
     </div>
   </div>
 
@@ -189,7 +194,8 @@ body{
 
 <script>
 const LIMIT = 100, REWARD = 0.002;
-const BAL_KEY = 'bal', COUNT_KEY = 'cnt', RESET_KEY = 'resetTime', JOIN_KEY = 'joined', JOIN_KEY2 = 'joined2', JOIN_KEY3 = 'joined3';
+const BAL_KEY = 'bal', COUNT_KEY = 'cnt', RESET_KEY = 'resetTime';
+const JOIN_KEY = 'joined', JOIN_KEY2 = 'joined2', JOIN_KEY3 = 'joined3', JOIN_KEY4='joined4';
 
 function safeGet(k,d=0){try{return JSON.parse(localStorage.getItem(k))??d;}catch{return d;}}
 function safeSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
@@ -216,11 +222,10 @@ if(!resetTime || Date.now() > resetTime){
   safeSet(COUNT_KEY, cnt);
 }
 
-// Update funksiyası həm AZN həm USDT balansını yeniləyir
 function update(){
   document.getElementById('balance').textContent = bal.toFixed(4);
   document.getElementById('balance2').textContent = bal.toFixed(4);
-  const usdt = bal / 1.7; // 1 USDT = 1.7 AZN
+  const usdt = bal / 1.7;
   document.getElementById('balanceUSD').textContent = usdt.toFixed(4);
   document.getElementById('balanceUSD2').textContent = usdt.toFixed(4);
   document.getElementById('adsCount').textContent = cnt;
@@ -263,6 +268,11 @@ joinBtn2.onclick=()=>{if(localStorage.getItem(JOIN_KEY2)) return; bal+=0.1; safe
 const joinBtn3=document.getElementById('joinBtn3');
 if(localStorage.getItem(JOIN_KEY3)){joinBtn3.textContent='Tamamlandı';joinBtn3.classList.add('completed'); joinBtn3.disabled=true;}
 joinBtn3.onclick=()=>{if(localStorage.getItem(JOIN_KEY3)) return; bal+=0.15; safeSet(BAL_KEY,bal); localStorage.setItem(JOIN_KEY3,'1'); joinBtn3.textContent='Tamamlandı'; joinBtn3.classList.add('completed'); joinBtn3.disabled=true; window.open('https://t.me/turaldevelopers','_blank'); update();}
+
+/* Yeni Sponsor Tapşırıq */
+const joinBtn4=document.getElementById('joinBtn4');
+if(localStorage.getItem(JOIN_KEY4)){joinBtn4.textContent='Tamamlandı';joinBtn4.classList.add('completed'); joinBtn4.disabled=true;}
+joinBtn4.onclick=()=>{if(localStorage.getItem(JOIN_KEY4)) return; bal+=0.05; safeSet(BAL_KEY,bal); localStorage.setItem(JOIN_KEY4,'1'); joinBtn4.textContent='Tamamlandı'; joinBtn4.classList.add('completed'); joinBtn4.disabled=true; window.open('https://t.me/ads_reklam69','_blank'); update();}
 
 /* Page navigation */
 function showPage(id,btn){
