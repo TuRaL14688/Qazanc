@@ -57,16 +57,16 @@ body{
 
 .ad-card, .task-card{
   background:var(--card-bg);
-  border-radius:20px;
-  padding:18px 16px;
+  border-radius:16px;           /* radiusu azaldıldı */
+  padding:12px 14px;            /* paddingi azaldıldı */
   text-align:center;
-  box-shadow:0 8px 30px rgba(0,0,0,0.25);
+  box-shadow:0 6px 20px rgba(0,0,0,0.25);
   backdrop-filter:blur(12px);
   border:1px solid var(--card-border);
-  margin-bottom:12px;
+  margin-bottom:10px;           /* margin azaldıldı */
 }
-.ad-card h2, .task-card h2{font-size:18px;color:var(--text-dark);margin-bottom:6px;}
-.ad-card p, .task-card p{margin:4px 0;color:var(--text-dark);font-size:13px;}
+.ad-card h2, .task-card h2{font-size:16px;color:var(--text-dark);margin-bottom:4px;} /* başlıq kiçildildi */
+.ad-card p, .task-card p{margin:3px 0;color:var(--text-dark);font-size:12px;}       /* mətn kiçildildi */
 .stats{display:flex;justify-content:space-around;margin-top:12px;}
 .stat{background:rgba(0,0,0,0.05);border-radius:10px;padding:8px 16px;}
 .stat span{display:block;font-size:16px;font-weight:700;color:var(--text-dark);}
@@ -76,12 +76,12 @@ body{
 
 .ad-btn, .task-card button{
   width:100%;
-  margin-top:12px;
-  padding:12px;
-  font-size:15px;
+  margin-top:10px;        /* margin azaldıldı */
+  padding:10px;           /* padding azaldıldı */
+  font-size:14px;         /* font kiçildildi */
   font-weight:700;
   border:none;
-  border-radius:14px;
+  border-radius:12px;     /* radius azaldıldı */
   color:var(--text-light);
   cursor:pointer;
   transition:0.3s;
@@ -269,7 +269,6 @@ const joinBtn3=document.getElementById('joinBtn3');
 if(localStorage.getItem(JOIN_KEY3)){joinBtn3.textContent='Tamamlandı';joinBtn3.classList.add('completed'); joinBtn3.disabled=true;}
 joinBtn3.onclick=()=>{if(localStorage.getItem(JOIN_KEY3)) return; bal+=0.15; safeSet(BAL_KEY,bal); localStorage.setItem(JOIN_KEY3,'1'); joinBtn3.textContent='Tamamlandı'; joinBtn3.classList.add('completed'); joinBtn3.disabled=true; window.open('https://t.me/turaldevelopers','_blank'); update();}
 
-/* Yeni Sponsor Tapşırıq */
 const joinBtn4=document.getElementById('joinBtn4');
 if(localStorage.getItem(JOIN_KEY4)){joinBtn4.textContent='Tamamlandı';joinBtn4.classList.add('completed'); joinBtn4.disabled=true;}
 joinBtn4.onclick=()=>{if(localStorage.getItem(JOIN_KEY4)) return; bal+=0.05; safeSet(BAL_KEY,bal); localStorage.setItem(JOIN_KEY4,'1'); joinBtn4.textContent='Tamamlandı'; joinBtn4.classList.add('completed'); joinBtn4.disabled=true; window.open('https://t.me/ads_reklam69','_blank'); update();}
@@ -298,12 +297,15 @@ methods.forEach(m=>{
     document.getElementById('methods').style.display='none';
     form.style.display='block';
     details.placeholder=ph[type];
+    amount.value='';
+    details.value='';
   }
 });
 
 document.getElementById('backBtn').onclick=()=>{
   form.style.display='none';
   document.getElementById('methods').style.display='flex';
+  alertBox.style.display='none';
 };
 
 document.getElementById('withdrawBtn').onclick=()=>{
@@ -329,6 +331,7 @@ document.getElementById('withdrawBtn').onclick=()=>{
   // Formu bağla
   form.style.display = 'none';
   document.getElementById('methods').style.display = 'flex';
+  type='';
 };
 
 function showErr(msg){
