@@ -56,7 +56,7 @@ body{
 .balance-card .amount{font-size:32px;font-weight:700;margin-top:5px;color:var(--text-dark);text-shadow:0 2px 5px rgba(0,0,0,0.1);}
 .balance-card .usd{font-size:14px;color:#555;margin-top:4px;}
 
-.ad-card, .task-card{
+.ad-card{
   background:var(--card-bg);
   border-radius:16px;
   padding:16px 18px;
@@ -66,8 +66,37 @@ body{
   border:1px solid var(--card-border);
   margin-bottom:12px;
 }
-.ad-card h2, .task-card h2{font-size:18px;color:var(--text-dark);margin-bottom:6px;}
-.ad-card p, .task-card p{margin:4px 0;color:var(--text-dark);font-size:13px;}
+.ad-card h2{font-size:18px;color:var(--text-dark);margin-bottom:6px;}
+.ad-card p{margin:4px 0;color:var(--text-dark);font-size:13px;}
+
+.task-card{
+  background:var(--card-bg);
+  border-radius:14px;
+  padding:12px 14px;
+  text-align:center;
+  box-shadow:0 4px 16px rgba(0,0,0,0.2);
+  backdrop-filter:blur(12px);
+  border:1px solid var(--card-border);
+  margin-bottom:10px;
+}
+.task-card h2{font-size:16px;color:var(--text-dark);margin-bottom:4px;}
+.task-card p{margin:2px 0;color:var(--text-dark);font-size:12px;}
+.task-card button{
+  width:100%;
+  margin-top:8px;
+  padding:10px;
+  font-size:13px;
+  font-weight:700;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(90deg,#f7971e,#ffd200);
+  color:var(--text-light);
+  cursor:pointer;
+  transition:0.3s;
+}
+.task-card button:hover{transform:scale(1.03);box-shadow:0 0 20px rgba(255,210,50,0.6);}
+.task-card button.completed{background:gray !important;box-shadow:none !important;cursor:not-allowed !important;pointer-events:none !important;opacity:0.55;}
+
 .stats{display:flex;justify-content:space-around;margin-top:12px;}
 .stat{background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 16px;}
 .stat span{display:block;font-size:16px;font-weight:700;color:var(--text-dark);}
@@ -75,7 +104,7 @@ body{
 .progress{height:10px;background:rgba(0,0,0,0.08);border-radius:6px;overflow:hidden;margin-top:12px;}
 .progress-fill{height:100%;background:#4ADE80;width:0%;transition:width .4s;}
 
-.ad-btn, .task-card button{
+.ad-btn{
   width:100%;
   margin-top:12px;
   padding:12px;
@@ -86,15 +115,10 @@ body{
   color:var(--text-light);
   cursor:pointer;
   transition:0.3s;
-}
-.ad-btn{
   background:linear-gradient(90deg,var(--btn-gradient-start),var(--btn-gradient-end));
   box-shadow:0 0 16px var(--btn-shadow);
 }
 .ad-btn:hover:not(.waiting){transform:scale(1.03);box-shadow:0 0 20px var(--btn-shadow);}
-.task-card button{background:linear-gradient(90deg,#f7971e,#ffd200);box-shadow:0 0 16px rgba(255,210,50,0.4);}
-.task-card button:hover{transform:scale(1.03);box-shadow:0 0 20px rgba(255,210,50,0.6);}
-.task-card button.completed{background:gray !important;box-shadow:none !important;cursor:not-allowed !important;pointer-events:none !important;opacity:0.55;}
 
 .menu{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);width:92%;display:flex;justify-content:space-around;background:rgba(255,255,255,0.15);padding:10px;border-radius:22px;box-shadow:0 6px 20px rgba(0,0,0,.3);}
 .menu button{flex:1;margin:0 6px;padding:12px;border:none;border-radius:16px;background:linear-gradient(90deg,#36D1DC,#5B86E5);color:#fff;font-weight:700;transition:0.3s;}
@@ -195,7 +219,6 @@ body{
 </div>
 
 <script>
-// Local Storage & balans
 const LIMIT = 100, REWARD = 0.005;
 const BAL_KEY='bal',COUNT_KEY='cnt',RESET_KEY='resetTime';
 const JOIN_KEY='joined',JOIN_KEY2='joined2',JOIN_KEY3='joined3',JOIN_KEY4='joined4';
@@ -268,13 +291,13 @@ if(localStorage.getItem(JOIN_KEY2)){joinBtn2.textContent='Tamamlandı';joinBtn2.
 joinBtn2.onclick=()=>{if(localStorage.getItem(JOIN_KEY2))return;bal+=0.1;safeSet(BAL_KEY,bal);localStorage.setItem(JOIN_KEY2,'1');joinBtn2.textContent='Tamamlandı';joinBtn2.classList.add('completed');joinBtn2.disabled=true;window.open('https://t.me/qazancazchat','_blank');update();}
 const joinBtn3=document.getElementById('joinBtn3');
 if(localStorage.getItem(JOIN_KEY3)){joinBtn3.textContent='Tamamlandı';joinBtn3.classList.add('completed');joinBtn3.disabled=true;}
-joinBtn3.onclick=()=>{if(localStorage.getItem(JOIN_KEY3))return;bal+=0.15;safeSet(BAL_KEY,bal);localStorage.setItem(JOIN_KEY3,'1');joinBtn3.textContent='Tamamlandı';joinBtn3.classList.add('completed');joinBtn3.disabled=true;window.open('https://t.me/turaldevelopers','_blank');update();}
+joinBtn3.onclick=()=>{if(localStorage.getItem(JOIN_KEY3))return;bal+=0.15;safeSet(BAL_KEY,bal);localStorage.setItem(JOIN_KEY3,'1');joinBtn3.textContent='Tamamlandı';joinBtn3.classList.add ('completed');joinBtn3.disabled=true;window.open('https://t.me/turaldevelopers','_blank');update();}
 const joinBtn4=document.getElementById('joinBtn4');
 if(localStorage.getItem(JOIN_KEY4)){joinBtn4.textContent='Tamamlandı';joinBtn4.classList.add('completed');joinBtn4.disabled=true;}
-joinBtn4.onclick=()=>{if(localStorage.getItem(JOIN_KEY4))return;bal+=0.05;safeSet(BAL_KEY,bal);localStorage.setItem(JOIN_KEY4,'1');joinBtn4.textContent='Tamamlandı';joinBtn4.classList.add('completed');joinBtn4.disabled=true;window.open('https://t.me/ads_reklam69','_blank'); update();}
+joinBtn4.onclick=()=>{if(localStorage.getItem(JOIN_KEY4))return;bal+=0.05;safeSet(BAL_KEY,bal);localStorage.setItem(JOIN_KEY4,'1');joinBtn4.textContent='Tamamlandı';joinBtn4.classList.add('completed');joinBtn4.disabled=true;window.open('https://t.me/ads_reklam69','_blank');update();};
 
 // Page navigation
-function showPage(id,btn){
+function showPage(id, btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));
@@ -282,16 +305,15 @@ function showPage(id,btn){
 }
 
 // Cüzdan çıxarış sistemi
-const methods=document.querySelectorAll('.method');
-const form=document.getElementById('form');
-const details=document.getElementById('details');
-const amount=document.getElementById('amount');
-const alertBox=document.getElementById('alert');
-let type='';
+const methods = document.querySelectorAll('.method');
+const form = document.getElementById('form');
+const details = document.getElementById('details');
+const amount = document.getElementById('amount');
+const alertBox = document.getElementById('alert');
+let type = '';
 
-// Minimum çıxarış məbləğləri
-const min={m10:10,azercell:10,bakcell:10,nar:10,bank:10,usdt:17};
-const ph={m10:'10 rəqəmli nömrə',azercell:'050xxxxxxx',bakcell:'055xxxxxxx',nar:'070xxxxxxx',bank:'16 rəqəmli kart nömrəsi',usdt:'TON adresi'};
+const min = { m10:10, azercell:10, bakcell:10, nar:10, bank:10, usdt:17 };
+const ph = { m10:'10 rəqəmli nömrə', azercell:'050xxxxxxx', bakcell:'055xxxxxxx', nar:'070xxxxxxx', bank:'16 rəqəmli kart nömrəsi', usdt:'TON adresi' };
 
 methods.forEach(m=>{
   m.onclick=()=>{
@@ -299,10 +321,10 @@ methods.forEach(m=>{
     document.getElementById('methods').style.display='none';
     form.style.display='block';
     details.placeholder=ph[type];
-    amount.value='';
     details.value='';
+    amount.value='';
     alertBox.style.display='none';
-  }
+  };
 });
 
 document.getElementById('backBtn').onclick=()=>{
@@ -313,18 +335,17 @@ document.getElementById('backBtn').onclick=()=>{
 };
 
 document.getElementById('withdrawBtn').onclick=()=>{
-  const det=details.value.trim();
-  const amt=parseFloat(amount.value);
+  const det = details.value.trim();
+  const amt = parseFloat(amount.value);
   alertBox.style.display='none';
 
   if(!type){ showErr('Metod seçin'); return; }
   if(!det){ showErr('Detalları daxil edin'); return; }
-  if(isNaN(amt)||amt<=0){ showErr('Məbləği düzgün daxil edin'); return; }
-  if(amt<min[type]){ showErr(`Minimum məbləğ ${min[type]} AZN`); return; }
-  if(amt>bal){ showErr('Balans kifayət etmir'); return; }
+  if(isNaN(amt) || amt <= 0){ showErr('Məbləği düzgün daxil edin'); return; }
+  if(amt < min[type]){ showErr(`Minimum məbləğ ${min[type]} AZN`); return; }
+  if(amt > bal){ showErr('Balans kifayət etmir'); return; }
 
-  // Balansı çıxmaq
-  bal-=amt;
+  bal -= amt;
   safeSet(BAL_KEY,bal);
   update();
 
@@ -332,7 +353,6 @@ document.getElementById('withdrawBtn').onclick=()=>{
   alertBox.className='alert success';
   alertBox.style.display='block';
 
-  // Formu bağla
   form.style.display='none';
   document.getElementById('methods').style.display='flex';
   type='';
