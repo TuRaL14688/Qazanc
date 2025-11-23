@@ -3,21 +3,24 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-<title>Qazanc AZ</title>
+<title id="pageTitle">Qazanc AZ</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="//libtl.com/sdk.js" data-zone="10024800" data-sdk="show_10024800"></script>
 <style>
+/* RƏNG SXEMİ DƏYİŞİKLİYİ: AĞ VƏ QIRMIZI */
 :root{
-  --bg-start:#f0f4f8;
-  --bg-end:#d9e2ec;
-  --card-bg:rgba(255,255,255,0.18);
+  --bg-start:#ffffff; 
+  --bg-end:#f0f0f0;   
+  --card-bg:rgba(255,255,255,0.85); 
   --card-border:rgba(0,0,0,0.1);
-  --btn-gradient-start:#36D1DC;
-  --btn-gradient-end:#5B86E5;
-  --btn-shadow:rgba(91,134,229,0.4);
+  --btn-gradient-start:#FF416C; 
+  --btn-gradient-end:#FF4B2B;   
+  --btn-shadow:rgba(255,65,108,0.4); 
   --text-light:#ffffff;
   --text-dark:#1B1B1B;
-  --accent:#FFD369;
+  --accent:#FF0000; 
+  --secondary-btn-gradient-start: #ffc371; 
+  --secondary-btn-gradient-end: #ff5f6d; 
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{
@@ -36,7 +39,79 @@ body{
   50%{background-position:100% 50%;}
   100%{background-position:0% 50%;}
 }
-.container{max-width:480px;margin:auto;padding:20px;padding-top:40px;}
+
+/* DÜZƏLİŞ 3: Yuxarı boşluğu azaltmaq */
+.container{max-width:480px;margin:auto;padding:20px;padding-top:20px;} 
+
+/* DİL SEÇİMİ (DROPDOWN STİLİ) */
+.lang-switcher-container {
+    position: relative;
+    display: flex;
+    justify-content: flex-end; 
+    margin-bottom: 20px;
+}
+.lang-current-btn {
+    padding: 6px 10px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-dark);
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 10px;
+    margin-left: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+}
+/* DÜZƏLİŞ 1: Ok işarəsi üçün məsafə */
+.lang-current-btn span {
+    margin-right: 5px; 
+}
+.lang-current-btn:hover {
+    box-shadow: 0 4px 15px rgba(255,0,0,0.2);
+}
+.lang-dropdown {
+    position: absolute;
+    top: 100%; 
+    right: 0;
+    margin-top: 5px;
+    background: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    overflow: hidden;
+    z-index: 10;
+    min-width: 60px;
+    display: none;
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--card-border);
+}
+.lang-dropdown.show {
+    display: block;
+}
+/* DÜZƏLİŞ 1: Dropdown düymələrindəki artıq boşluğu aradan qaldırmaq */
+.lang-dropdown button {
+    width: 100%;
+    padding: 8px 15px;
+    border: none;
+    background: none;
+    color: var(--text-dark);
+    font-weight: 600;
+    text-align: center; /* Mərkəzə gətirdik, ya da sol/sağa align edə bilərsiniz */
+    cursor: pointer;
+    transition: background 0.2s;
+    display: block; /* Tam genişliyi əhatə etmək üçün */
+}
+
+.lang-dropdown button:hover, .lang-dropdown button.active {
+    background: var(--accent);
+    color: var(--text-light);
+}
+/* DÜZƏLİŞ 1: Seçilmiş dildə boşluqları düzəltmək üçün */
+.lang-dropdown button {
+    text-align: center; 
+}
+
 .page{display:none;animation:fadeIn .4s ease;}
 .page.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
@@ -63,8 +138,8 @@ body{
     flex:1 1 calc(50% - 10px);
     padding:14px;
     border-radius:14px;
-    background:linear-gradient(90deg,#36D1DC,#5B86E5);
-    color:#fff;
+    background:linear-gradient(90deg,var(--btn-gradient-start),var(--btn-gradient-end)); 
+    color:var(--text-light);
     text-align:center;
     font-weight:700;
     cursor:pointer;
@@ -77,7 +152,6 @@ body{
 }
 .method:hover{transform:scale(1.03);box-shadow:0 0 10px rgba(0,0,0,0.2);}
 .method-logo{
-    /* Loqo ölçüsü və forması */
     width: 50px;       
     height: 50px;      
     margin-bottom: 6px;
@@ -93,42 +167,42 @@ body{
 .method-text {
     font-size: 14px;
 }
-
-/* Digər Stil Blokları Qısaldılmışdır */
 .ad-card{background:var(--card-bg);border-radius:16px;padding:16px 18px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,0.25);backdrop-filter:blur(12px);border:1px solid var(--card-border);margin-bottom:12px;}
 .ad-card h2{font-size:18px;color:var(--text-dark);margin-bottom:6px;}
 .ad-card p{margin:4px 0;color:var(--text-dark);font-size:13px;}
 .task-card{background:var(--card-bg);border-radius:14px;padding:12px 14px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,0.2);backdrop-filter:blur(12px);border:1px solid var(--card-border);margin-bottom:10px;}
 .task-card h2{font-size:16px;color:var(--text-dark);margin-bottom:4px;}
 .task-card p{margin:2px 0;color:var(--text-dark);font-size:12px;}
-.task-card button{width:100%;margin-top:8px;padding:10px;font-size:13px;font-weight:700;border:none;border-radius:12px;background:linear-gradient(90deg,#f7971e,#ffd200);color:var(--text-light);cursor:pointer;transition:0.3s;}
-.task-card button:hover{transform:scale(1.03);box-shadow:0 0 20px rgba(255,210,50,0.6);}
+.task-card button{width:100%;margin-top:8px;padding:10px;font-size:13px;font-weight:700;border:none;border-radius:12px;background:linear-gradient(90deg,var(--secondary-btn-gradient-start),var(--secondary-btn-gradient-end)); 
+    color:var(--text-light);cursor:pointer;transition:0.3s;}
+.task-card button:hover{transform:scale(1.03);box-shadow:0 0 20px rgba(255,95,109,0.6);}
 .task-card button.completed{background:gray !important;box-shadow:none !important;cursor:not-allowed !important;pointer-events:none !important;opacity:0.55;}
 .stats{display:flex;justify-content:space-around;margin-top:12px;}
 .stat{background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 16px;}
 .stat span{display:block;font-size:16px;font-weight:700;color:var(--text-dark);}
 .stat label{font-size:11px;color:#666;}
 .progress{height:10px;background:rgba(0,0,0,0.08);border-radius:6px;overflow:hidden;margin-top:12px;}
-.progress-fill{height:100%;background:#4ADE80;width:0%;transition:width .4s;}
+.progress-fill{height:100%;background:var(--accent);width:0%;transition:width .4s;} 
 .ad-btn{width:100%;margin-top:12px;padding:12px;font-size:14px;font-weight:700;border:none;border-radius:14px;color:var(--text-light);cursor:pointer;transition:0.3s;background:linear-gradient(90deg,var(--btn-gradient-start),var(--btn-gradient-end));box-shadow:0 0 16px var(--btn-shadow);}
 .ad-btn:hover:not(.waiting){transform:scale(1.03);box-shadow:0 0 20px var(--btn-shadow);}
 .menu{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);width:92%;display:flex;justify-content:space-around;background:rgba(255,255,255,0.15);padding:10px;border-radius:22px;box-shadow:0 6px 20px rgba(0,0,0,.3);}
-.menu button{flex:1;margin:0 6px;padding:12px;border:none;border-radius:16px;background:linear-gradient(90deg,#36D1DC,#5B86E5);color:#fff;font-weight:700;transition:0.3s;}
-.menu button.active{background:linear-gradient(90deg,#f7971e,#ffd200);box-shadow:0 0 18px rgba(255,210,50,0.6);}
+.menu button{flex:1;margin:0 6px;padding:12px;border:none;border-radius:16px;background:linear-gradient(90deg,var(--btn-gradient-start),var(--btn-gradient-end));color:var(--text-light);font-weight:700;transition:0.3s;}
+.menu button.active{background:linear-gradient(90deg,var(--secondary-btn-gradient-start),var(--secondary-btn-gradient-end));box-shadow:0 0 18px rgba(255,95,109,0.6);}
 #form{display:none;margin-top:12px;}
 #form input{width:100%;padding:12px;margin:6px 0;border-radius:12px;border:1px solid #ccc;}
-#form button{width:100%;padding:14px;margin-top:8px;border:none;border-radius:14px;background:linear-gradient(90deg,#f7971e,#ffd200);color:#fff;font-weight:700;cursor:pointer;}
+#form button{width:100%;padding:14px;margin-top:8px;border:none;border-radius:14px;background:linear-gradient(90deg,var(--secondary-btn-gradient-start),var(--secondary-btn-gradient-end));color:var(--text-light);font-weight:700;cursor:pointer;}
 .alert{margin-top:6px;padding:10px;border-radius:10px;display:none;}
 .alert.error{background:#f8d7da;color:#842029;}
 .alert.success{background:#d1e7dd;color:#0f5132;}
+
 #loadingScreen{position:fixed;top:0; left:0;width:100%; height:100%;background:radial-gradient(circle at 20% 20%, #4e4376, #2b5876 70%);display:flex;justify-content:center;align-items:center;z-index:99999;backdrop-filter:blur(6px);animation:fadeBg 6s linear infinite;transition:opacity .7s ease;}
 @keyframes fadeBg{0%{filter:brightness(1);}50%{filter:brightness(1.3);}100%{filter:brightness(1);}}
 .loader-box{text-align:center;animation:fadeIn .8s ease;position:relative;}
 .shine-circle{position:absolute;width:220px; height:220px;top:-70px; left:50%;transform:translateX(-50%);background:radial-gradient(circle, rgba(255,255,255,0.35), transparent 80%);filter:blur(40px);animation:pulse 3s infinite ease-in-out;}
 @keyframes pulse{0%,100%{opacity:.4;}50%{opacity:1;}}
-.loader-title{font-size:40px;font-weight:900;color:#ffd369;letter-spacing:2px;text-shadow:0 0 12px #ffd369, 0 0 35px rgba(255,210,50,0.9);margin-bottom:32px;}
+.loader-title{font-size:40px;font-weight:900;color:#ff4b2b; letter-spacing:2px;text-shadow:0 0 12px #ff416c, 0 0 35px rgba(255,75,43,0.9);margin-bottom:32px;}
 .loader-bar{width:300px;height:16px;border-radius:20px;background:rgba(255,255,255,0.15);overflow:hidden;position:relative;box-shadow:0 0 14px rgba(255,255,255,0.3);}
-.loader-fill{height:100%;width:0%;border-radius:20px;background:linear-gradient(90deg,#ffb347,#ffcc33,#ffe08a);animation:fillAnim 3s forwards ease-in-out;}
+.loader-fill{height:100%;width:0%;border-radius:20px;background:linear-gradient(90deg,#ff8008,#ffc837,#ffd452); animation:fillAnim 3s forwards ease-in-out;}
 @keyframes fillAnim{from{width:0%;}to{width:100%;}}
 .glow{position:absolute;top:0; left:0;width:100%; height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.9),transparent);animation:shine 1.6s infinite;}
 @keyframes shine{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
@@ -145,63 +219,74 @@ body{
       <div class="loader-fill"></div>
       <div class="glow"></div>
     </div>
-    <div class="loader-text">Yüklənir...</div>
+    <div class="loader-text" data-translate-key="loading">Yüklənir...</div>
   </div>
 </div>
 
 <div class="container">
-
+  
+  <div class="lang-switcher-container">
+    <button class="lang-current-btn" onclick="toggleDropdown()">
+        <span id="currentLangDisplay">AZ</span>
+        <span id="langArrow"></span>
+    </button>
+    <div class="lang-dropdown" id="langDropdown">
+        <button onclick="setLang('az')" id="langAzBtn">AZ</button>
+        <button onclick="setLang('en')" id="langEnBtn">EN</button>
+        <button onclick="setLang('tr')" id="langTrBtn">TR</button>
+    </div>
+  </div>
   <div id="adsPage" class="page active">
     <div class="balance-card">
-      <h3>Balansınız</h3>
+      <h3 data-translate-key="currentBalance">Balans</h3>
       <div class="amount"><span id="balance">0.0000</span> ₼</div>
       <div class="usd">$<span id="balanceUSD">0.0000</span> USDT</div>
     </div>
 
     <div class="ad-card">
-      <h2>Günlük Reklamlar</h2>
-      <p>Hər reklama görə <b>0.005 ₼</b> qazanın</p>
+      <h2 data-translate-key="dailyAds">Günlük Reklamlar</h2>
+      <p data-translate-key="adReward">Hər reklama görə <b>0.005 ₼</b> qazanın</p>
       <div class="stats">
-        <div class="stat"><span id="adsCount">0</span><label>İzlənən</label></div>
-        <div class="stat"><span>100</span><label>Maksimum</label></div>
+        <div class="stat"><span id="adsCount">0</span><label data-translate-key="watched">İzlənən</label></div>
+        <div class="stat"><span data-translate-key="maxCount">100</span><label data-translate-key="maximum">Maksimum</label></div>
       </div>
       <div class="progress"><div class="progress-fill" id="progress"></div></div>
-      <p style="margin-top:6px;">İrəliləyiş: <span id="progressText">0/100</span></p>
-      <button id="adBtn" class="ad-btn">Reklam</button>
+      <p style="margin-top:6px;" data-translate-key="progressText">İrəliləyiş: <span id="progressTextSpan">0/100</span></p>
+      <button id="adBtn" class="ad-btn" data-translate-key="watchAd">Reklam</button>
       <div id="msg"></div>
     </div>
   </div>
 
   <div id="tasksPage" class="page">
     <div class="task-card">
-      <h2>Premium Tapşırıq</h2>
-      <p>Kanala qoşul və <b>0.1 ₼</b> qazan!</p>
-      <button id="joinBtn">Kanala Qoşul</button>
+      <h2 data-translate-key="premiumTask">Premium Tapşırıq</h2>
+      <p data-translate-key="taskReward1">Kanala qoşul və <b>0.1 ₼</b> qazan!</p>
+      <button id="joinBtn" data-translate-key="joinChannel">Kanala Qoşul</button>
     </div>
     <div class="task-card">
-      <h2>Bonus Tapşırıq</h2>
-      <p>Qrupa qoşul və <b>0.1 ₼</b> qazan!</p>
-      <button id="joinBtn2">Kanala Qoşul</button>
+      <h2 data-translate-key="bonusTask">Bonus Tapşırıq</h2>
+      <p data-translate-key="taskReward2">Qrupa qoşul və <b>0.1 ₼</b> qazan!</p>
+      <button id="joinBtn2" data-translate-key="joinGroup">Qrupa Qoşul</button>
     </div>
     <div class="task-card">
-      <h2>Bonus Tapşırıq</h2>
-      <p>Kanala qoşul və <b>0.15 ₼</b> qazan!</p>
-      <button id="joinBtn3">Kanala Qoşul</button>
+      <h2 data-translate-key="bonusTask">Bonus Tapşırıq</h2>
+      <p data-translate-key="taskReward3">Kanala qoşul və <b>0.15 ₼</b> qazan!</p>
+      <button id="joinBtn3" data-translate-key="joinChannel">Kanala Qoşul</button>
     </div>
     <div class="task-card">
-      <h2>Sponsor Tapşırıq</h2>
-      <p>Kanala qoşul və <b>0.05 ₼</b> qazan!</p>
-      <button id="joinBtn4">Kanala Qoşul</button>
+      <h2 data-translate-key="sponsorTask">Sponsor Tapşırıq</h2>
+      <p data-translate-key="taskReward4">Kanala qoşul və <b>0.05 ₼</b> qazan!</p>
+      <button id="joinBtn4" data-translate-key="joinChannel">Kanala Qoşul</button>
     </div>
   </div>
 
   <div id="walletPage" class="page">
     <div class="balance-card">
-      <h3>Balansınız</h3>
+      <h3 data-translate-key="withdrawBalance">Balans</h3>
       <div class="amount"><span id="balance2">0.0000</span> ₼</div>
       <div class="usd">$<span id="balanceUSD2">0.0000</span> USDT</div>
     </div>
-    <h2 style="text-align:center;margin-bottom:12px;color:#000000;">Çıxarış</h2>
+    <h2 style="text-align:center;margin-bottom:12px;color:#000000;" data-translate-key="withdrawTitle">Çıxarış</h2>
     <div class="method-list" id="methods">
       
       <div class="method" data-type="m10">
@@ -222,7 +307,7 @@ body{
       </div>
       <div class="method" data-type="bank">
           <img src="https://i.postimg.cc/L6H0yWwZ/42492-bank-1024.png" alt="Bank Logo" class="method-logo bank-logo">
-          <span class="method-text">Bank</span>
+          <span class="method-text" data-translate-key="bankCard">Bank</span>
       </div>
       <div class="method" data-type="usdt">
           <img src="https://i.postimg.cc/X7HxsY98/Tether-USDT-Logo.png" alt="USDT Logo" class="method-logo">
@@ -230,10 +315,10 @@ body{
       </div>
     </div>
     <div class="form" id="form">
-      <button id="backBtn" style="background:none;border:none;color:#93c5fd;font-weight:700;">⬅ Geri</button>
+      <button id="backBtn" style="background:none;border:none;color:var(--accent);font-weight:700;">⬅ <span data-translate-key="back">Geri</span></button>
       <input id="details" placeholder="">
       <input id="amount" type="number" placeholder="Məbləğ (AZN)">
-      <button id="withdrawBtn">Çıxarış Et</button>
+      <button id="withdrawBtn" data-translate-key="withdraw">Çıxarış Et</button>
       <div id="alert" class="alert"></div>
     </div>
   </div>
@@ -241,18 +326,160 @@ body{
 </div>
 
 <div class="menu">
-  <button onclick="showPage('adsPage',this)" class="active">Ev</button>
-  <button onclick="showPage('tasksPage',this)">Görevler</button>
-  <button onclick="showPage('walletPage',this)">Cüzdan</button>
+  <button onclick="showPage('adsPage',this)" class="active" data-translate-key="home">Ev</button>
+  <button onclick="showPage('tasksPage',this)" data-translate-key="tasks">Görevler</button>
+  <button onclick="showPage('walletPage',this)" data-translate-key="wallet">Cüzdan</button>
 </div>
-
 <script>
-/* Loading Ekranı */
-setTimeout(()=>{
-  const s=document.getElementById("loadingScreen");
-  s.style.opacity="0";
-  setTimeout(()=>s.style.display="none",700);
-},3000);
+// --- TƏRCÜMƏ MƏLUMATLARI (DİL SÖZLÜYÜ) ---
+const TRANSLATIONS = {
+    'az': {
+        pageTitle: 'Qazanc AZ',
+        loading: 'Yüklənir...',
+        // DÜZƏLİŞ 2: Tərcümə dəyişiklikləri
+        currentBalance: 'Balans',
+        withdrawBalance: 'Balans',
+        dailyAds: 'Günlük Reklamlar',
+        adReward: 'Hər reklama görə <b>0.005 ₼</b> qazanın',
+        watched: 'İzlənən',
+        maximum: 'Maksimum',
+        maxCount: '100',
+        progressText: 'İrəliləyiş: ',
+        watchAd: 'Reklam İzle',
+        adLimitReached: '📣 Gündəlik limitə çatdınız!',
+        watching: 'İzlənir...',
+        rewardAdded: '✅ +0.005 ₼ əlavə olundu!',
+        wait: '⏳ {s}s gözləyin',
+        premiumTask: 'Premium Tapşırıq',
+        bonusTask: 'Bonus Tapşırıq',
+        sponsorTask: 'Sponsor Tapşırıq',
+        taskReward1: 'Kanala qoşul və <b>0.1 ₼</b> qazan!',
+        taskReward2: 'Qrupa qoşul və <b>0.1 ₼</b> qazan!',
+        taskReward3: 'Kanala qoşul və <b>0.15 ₼</b> qazan!',
+        taskReward4: 'Kanala qoşul və <b>0.05 ₼</b> qazan!',
+        joinChannel: 'Kanala Qoşul',
+        joinGroup: 'Qrupa Qoşul',
+        withdrawTitle: 'Çıxarış',
+        bankCard: 'Bank Kartı',
+        back: 'Geri',
+        withdraw: 'Çıxarış Et',
+        methodError: 'Metod seçin',
+        detailsError: 'Detalları daxil edin',
+        amountError: 'Məbləği düzgün daxil edin',
+        minAmount: 'Minimum məbləğ {min} AZN',
+        balanceError: 'Balans kifayət etmir',
+        withdrawSuccess: '✅ Çıxarış göndərildi! 48 saat ərzində yerinə yetiriləcək.',
+        home: 'Ev',
+        tasks: 'Görevler',
+        wallet: 'Cüzdan',
+        placeholderDetails_m10: '10 rəqəmli nömrə',
+        placeholderDetails_azercell: '050xxxxxxx',
+        placeholderDetails_bakcell: '055xxxxxxx',
+        placeholderDetails_nar: '070xxxxxxx',
+        placeholderDetails_bank: '16 rəqəmli kart nömrəsi',
+        placeholderDetails_usdt: 'TON adresi',
+        placeholderAmount: 'Məbləğ (AZN)',
+        completed: 'Tamamlandı',
+    },
+    'en': {
+        pageTitle: 'Qazanc AZ',
+        loading: 'Loading...',
+        // DÜZƏLİŞ 2: Tərcümə dəyişiklikləri
+        currentBalance: 'Balance',
+        withdrawBalance: 'Balance',
+        dailyAds: 'Daily Ads',
+        adReward: 'Earn <b>0.005 ₼</b> for each ad',
+        watched: 'Watched',
+        maximum: 'Maximum',
+        maxCount: '100',
+        progressText: 'Progress: ',
+        watchAd: 'Watch Ad',
+        adLimitReached: '📣 Daily limit reached!',
+        watching: 'Watching...',
+        rewardAdded: '✅ +0.005 ₼ added!',
+        wait: '⏳ Wait {s}s',
+        premiumTask: 'Premium Task',
+        bonusTask: 'Bonus Task',
+        sponsorTask: 'Sponsor Task',
+        taskReward1: 'Join channel and earn <b>0.1 ₼</b>!',
+        taskReward2: 'Join group and earn <b>0.1 ₼</b>!',
+        taskReward3: 'Join channel and earn <b>0.15 ₼</b>!',
+        taskReward4: 'Join channel and earn <b>0.05 ₼</b>!',
+        joinChannel: 'Join Channel',
+        joinGroup: 'Join Group',
+        withdrawTitle: 'Withdrawal',
+        bankCard: 'Bank Card',
+        back: 'Back',
+        withdraw: 'Withdraw',
+        methodError: 'Select a method',
+        detailsError: 'Enter details',
+        amountError: 'Enter correct amount',
+        minAmount: 'Minimum amount {min} AZN',
+        balanceError: 'Insufficient balance',
+        withdrawSuccess: '✅ Withdrawal sent! It will be executed within 48 hours.',
+        home: 'Home',
+        tasks: 'Tasks',
+        wallet: 'Wallet',
+        placeholderDetails_m10: '10 digit M10 number',
+        placeholderDetails_azercell: '050xxxxxxx',
+        placeholderDetails_bakcell: '055xxxxxxx',
+        placeholderDetails_nar: '070xxxxxxx',
+        placeholderDetails_bank: '16 digit card number',
+        placeholderDetails_usdt: 'TON address',
+        placeholderAmount: 'Amount (AZN)',
+        completed: 'Completed',
+    },
+    'tr': {
+        pageTitle: 'Kazan AZ',
+        loading: 'Yükleniyor...',
+        // DÜZƏLİŞ 2: Tərcümə dəyişiklikləri
+        currentBalance: 'Bakiye',
+        withdrawBalance: 'Bakiye',
+        dailyAds: 'Günlük Reklamlar',
+        adReward: 'Her reklam için <b>0.005 ₼</b> kazanın',
+        watched: 'İzlenen',
+        maximum: 'Maksimum',
+        maxCount: '100',
+        progressText: 'İlerleme: ',
+        watchAd: 'Reklam İzle',
+        adLimitReached: '📣 Günlük sınıra ulaştınız!',
+        watching: 'İzleniyor...',
+        rewardAdded: '✅ +0.005 ₼ eklendi!',
+        wait: '⏳ {s}sn bekleyin',
+        premiumTask: 'Premium Görev',
+        bonusTask: 'Bonus Görev',
+        sponsorTask: 'Sponsor Görevi',
+        taskReward1: 'Kanala katıl ve <b>0.1 ₼</b> kazan!',
+        taskReward2: 'Gruba katıl ve <b>0.1 ₼</b> kazan!',
+        taskReward3: 'Kanala katıl ve <b>0.15 ₼</b> kazan!',
+        taskReward4: 'Kanala katıl ve <b>0.05 ₼</b> kazan!',
+        joinChannel: 'Kanala Katıl',
+        joinGroup: 'Gruba Katıl',
+        withdrawTitle: 'Para Çekme',
+        bankCard: 'Banka Kartı',
+        back: 'Geri',
+        withdraw: 'Para Çek',
+        methodError: 'Yöntem seçin',
+        detailsError: 'Bilgileri girin',
+        amountError: 'Miktarı doğru girin',
+        minAmount: 'Minimum miktar {min} AZN',
+        balanceError: 'Yetersiz bakiye',
+        withdrawSuccess: '✅ Çekim talebi gönderildi! 48 saat içinde tamamlanacaktır.',
+        home: 'Ana Sayfa',
+        tasks: 'Görevler',
+        wallet: 'Cüzdan',
+        placeholderDetails_m10: '10 haneli M10 numarası',
+        placeholderDetails_azercell: '050xxxxxxx',
+        placeholderDetails_bakcell: '055xxxxxxx',
+        placeholderDetails_nar: '070xxxxxxx',
+        placeholderDetails_bank: '16 haneli kart numarası',
+        placeholderDetails_usdt: 'TON adresi',
+        placeholderAmount: 'Miktar (AZN)',
+        completed: 'Tamamlandı',
+    }
+};
+
+let currentLang = localStorage.getItem('lang') || 'az';
 
 const LIMIT = 100, REWARD = 0.005;
 const BAL_KEY='bal',COUNT_KEY='cnt',RESET_KEY='resetTime';
@@ -286,50 +513,165 @@ if(!resetTime||Date.now()>resetTime){
 function update(){
   document.getElementById('balance').textContent=bal.toFixed(4);
   document.getElementById('balance2').textContent=bal.toFixed(4);
-  const usdt=bal/1.7; // 1 AZN = 1/1.7 USDT (təxmini)
+  const usdt=bal/1.7; 
   document.getElementById('balanceUSD').textContent=usdt.toFixed(4);
   document.getElementById('balanceUSD2').textContent=usdt.toFixed(4);
   document.getElementById('adsCount').textContent=cnt;
   document.getElementById('progress').style.width=(cnt/LIMIT*100)+'%';
-  document.getElementById('progressText').textContent=`${cnt}/${LIMIT}`;
+  const progressTextSpan = document.getElementById('progressTextSpan');
+  if(progressTextSpan) progressTextSpan.textContent = `${cnt}/${LIMIT}`;
   safeSet(BAL_KEY,bal);
   safeSet(COUNT_KEY,cnt);
 }
-update();
+
+function updateTaskButtons() {
+    const completedText = TRANSLATIONS[currentLang].completed;
+    [JOIN_KEY, JOIN_KEY2, JOIN_KEY3, JOIN_KEY4].forEach((key, index) => {
+        const btnId = `joinBtn${index > 0 ? index : ''}`;
+        const btn = document.getElementById(btnId);
+        if (!btn) return;
+        
+        if (localStorage.getItem(key)){
+            btn.classList.add('completed');
+            btn.textContent = completedText;
+            btn.disabled=true; 
+        } else {
+             btn.classList.remove('completed');
+             btn.disabled=false; 
+             const key = btn.getAttribute('data-translate-key');
+             if(TRANSLATIONS[currentLang][key]) {
+                 btn.textContent = TRANSLATIONS[currentLang][key];
+             }
+        }
+    });
+}
+
+function setPlaceholders(methodType) {
+    const t = TRANSLATIONS[currentLang];
+    const detailsKey = `placeholderDetails_${methodType}`;
+    const amountKey = `placeholderAmount`;
+
+    details.placeholder = t[detailsKey] || '';
+    amount.placeholder = t[amountKey] || 'Məbləğ (AZN)';
+}
+
+function applyTranslations(lang) {
+    const t = TRANSLATIONS[lang];
+    if (!t) return;
+
+    document.getElementById('pageTitle').textContent = t.pageTitle;
+    document.getElementById('currentLangDisplay').textContent = lang.toUpperCase(); 
+    
+    // DÜZƏLİŞ 1: Ok işarəsini cari dilin yanında göstər
+    document.getElementById('langArrow').textContent = '⬇️'; 
+
+    // Aktiv dil düyməsini dropdown-da qeyd et
+    document.getElementById('langAzBtn').classList.remove('active');
+    document.getElementById('langEnBtn').classList.remove('active');
+    document.getElementById('langTrBtn').classList.remove('active');
+    
+    const langBtnId = `lang${lang.charAt(0).toUpperCase() + lang.slice(1)}Btn`;
+    const activeBtn = document.getElementById(langBtnId);
+    if(activeBtn) {
+        activeBtn.classList.add('active');
+    }
+
+    document.querySelectorAll('[data-translate-key]').forEach(el => {
+        const key = el.getAttribute('data-translate-key');
+        if (t[key]) {
+            el.innerHTML = t[key];
+        }
+    });
+
+    const progressTextSpan = document.getElementById('progressTextSpan');
+    if(progressTextSpan) {
+        progressTextSpan.textContent = `${cnt}/${LIMIT}`;
+    }
+    
+    updateTaskButtons(); 
+
+    document.querySelectorAll('.menu button').forEach(button => {
+        const key = button.getAttribute('data-translate-key');
+        if (key && t[key]) {
+            button.textContent = t[key];
+        }
+    });
+}
+
+// YENİ: Açılan menyu funksiyası
+function toggleDropdown() {
+    const dropdown = document.getElementById('langDropdown');
+    dropdown.classList.toggle('show');
+    // Dropdown bağlananda ok işarəsini sil, açılınca göstər
+    document.getElementById('langArrow').textContent = dropdown.classList.contains('show') ? '⬇️' : '';
+}
+
+function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    
+    // Seçim edildikdən sonra oxu gizlət, menyu bağlanacaq
+    document.getElementById('langArrow').textContent = ''; 
+    
+    applyTranslations(lang);
+    toggleDropdown(); // Seçim edildikdən sonra bağla
+    
+    if (document.getElementById('form').style.display === 'block') {
+        setPlaceholders(type);
+    }
+}
 
 // Reklam düyməsi Funksiyası
 const adBtn=document.getElementById('adBtn'), msg=document.getElementById('msg');
 adBtn.onclick=()=>{
-  if(cnt>=LIMIT){ msg.textContent='📣 Gündəlik limitə çatdınız!'; return; }
+  const t = TRANSLATIONS[currentLang];
+  if(cnt>=LIMIT){ msg.textContent=t.adLimitReached; return; }
   adBtn.disabled=true; adBtn.classList.add('waiting');
-  msg.innerHTML=`<span>İzlənir...</span><div id="timerBar" style="height:6px;width:0%;background:#4ade80;border-radius:4px;margin-top:6px;"></div>`;
-  try{if(typeof show_10024800==='function'){show_10024800();}}catch(e){} // Reklamı göstər
+  msg.innerHTML=`<span>${t.watching}</span><div id="timerBar" style="height:6px;width:0%;background:var(--accent);border-radius:4px;margin-top:6px;"></div>`;
+  try{if(typeof show_10024800==='function'){show_10024800();}}catch(e){} 
   setTimeout(()=>{
-    bal+=REWARD; cnt++; update(); msg.innerHTML='✅ +0.005 ₼ əlavə olundu!';
+    bal+=REWARD; cnt++; update(); msg.innerHTML=t.rewardAdded;
     let s=10;
-    const t=setInterval(()=>{
+    const tInterval=setInterval(()=>{
       s--;
       const timerBar=document.getElementById('timerBar');
       if(timerBar){timerBar.style.width=`${(10-s)/10*100}%`;timerBar.style.background=`hsl(${(10-s)*36},80%,50%)`;}
-      msg.innerHTML=`⏳ ${s}s gözləyin<div id="timerBar" style="height:6px;width:${(10-s)/10*100}%;background:hsl(${(10-s)*36},80%,50%);border-radius:4px;margin-top:6px;"></div>`;
-      if(s<=0){clearInterval(t);adBtn.disabled=false;adBtn.classList.remove('waiting');msg.textContent='';}
+      msg.innerHTML=t.wait.replace('{s}', s)+`<div id="timerBar" style="height:6px;width:${(10-s)/10*100}%;background:var(--accent);border-radius:4px;margin-top:6px;"></div>`;
+      if(s<=0){clearInterval(tInterval);adBtn.disabled=false;adBtn.classList.remove('waiting');msg.textContent='';}
     },1000);
   },2500);
 };
 
 // Tapşırıqlar Funksiyaları
-const joinBtn=document.getElementById('joinBtn');
-if(localStorage.getItem(JOIN_KEY)){joinBtn.textContent='Tamamlandı';joinBtn.classList.add('completed');joinBtn.disabled=true;}
-joinBtn.onclick=()=>{if(localStorage.getItem(JOIN_KEY))return;bal+=0.1;safeSet(BAL_KEY,bal);localStorage.setItem(JOIN_KEY,'1');joinBtn.textContent='Tamamlandı';joinBtn.classList.add('completed');joinBtn.disabled=true;window.open('https://t.me/qazancazicmasi','_blank');update();}
-const joinBtn2=document.getElementById('joinBtn2');
-if(localStorage.getItem(JOIN_KEY2)){joinBtn2.textContent='Tamamlandı';joinBtn2.classList.add('completed');joinBtn2.disabled=true;}
-joinBtn2.onclick=()=>{if(localStorage.getItem(JOIN_KEY2))return;bal+=0.1;safeSet(BAL_KEY,bal);localStorage.setItem(JOIN_KEY2,'1');joinBtn2.textContent='Tamamlandı';joinBtn2.classList.add('completed');joinBtn2.disabled=true;window.open('https://t.me/qazancazchat','_blank');update();}
-const joinBtn3=document.getElementById('joinBtn3');
-if(localStorage.getItem(JOIN_KEY3)){joinBtn3.textContent='Tamamlandı';joinBtn3.classList.add('completed');joinBtn3.disabled=true;}
-joinBtn3.onclick=()=>{if(localStorage.getItem(JOIN_KEY3))return;bal+=0.15;safeSet(BAL_KEY,bal);localStorage.setItem(JOIN_KEY3,'1');joinBtn3.textContent='Tamamlandı';joinBtn3.classList.add ('completed');joinBtn3.disabled=true;window.open('https://t.me/turaldevelopers','_blank');update();}
-const joinBtn4=document.getElementById('joinBtn4');
-if(localStorage.getItem(JOIN_KEY4)){joinBtn4.textContent='Tamamlandı';joinBtn4.classList.add('completed');joinBtn4.disabled=true;}
-joinBtn4.onclick=()=>{if(localStorage.getItem(JOIN_KEY4))return;bal+=0.05;safeSet(BAL_KEY,bal);localStorage.setItem(JOIN_KEY4,'1');joinBtn4.textContent='Tamamlandı';joinBtn4.classList.add('completed');joinBtn4.disabled=true;window.open('https://t.me/ads_reklam69','_blank');update();};
+const taskButtons = [
+    { id: 'joinBtn', key: JOIN_KEY, reward: 0.1, url: 'https://t.me/qazancazicmasi' },
+    { id: 'joinBtn2', key: JOIN_KEY2, reward: 0.1, url: 'https://t.me/qazancazchat' },
+    { id: 'joinBtn3', key: JOIN_KEY3, reward: 0.15, url: 'https://t.me/turaldevelopers' },
+    { id: 'joinBtn4', key: JOIN_KEY4, reward: 0.05, url: 'https://t.me/ads_reklam69' }
+];
+
+taskButtons.forEach(task => {
+    const btn = document.getElementById(task.id);
+    if (!btn) return;
+    
+    // Tapşırıq tamamlanıbsa düyməni sıradan çıxar
+    if(localStorage.getItem(task.key)){
+        btn.classList.add('completed');
+        btn.disabled=true;
+    }
+    
+    btn.onclick=()=>{
+        if(localStorage.getItem(task.key))return;
+        bal+=task.reward;
+        safeSet(BAL_KEY,bal);
+        localStorage.setItem(task.key,'1');
+        btn.classList.add('completed');
+        btn.disabled=true;
+        window.open(task.url,'_blank');
+        update();
+        updateTaskButtons();
+    };
+});
 
 // Səhifə Naviqasiyası
 function showPage(id, btn){
@@ -348,14 +690,13 @@ const alertBox = document.getElementById('alert');
 let type = '';
 
 const min = { m10:10, azercell:10, bakcell:10, nar:10, bank:10, usdt:17 };
-const ph = { m10:'10 rəqəmli nömrə', azercell:'050xxxxxxx', bakcell:'055xxxxxxx', nar:'070xxxxxxx', bank:'16 rəqəmli kart nömrəsi', usdt:'TON adresi' };
 
 methods.forEach(m=>{
   m.onclick=()=>{
     type=m.dataset.type;
     document.getElementById('methods').style.display='none';
     form.style.display='block';
-    details.placeholder=ph[type];
+    setPlaceholders(type);
     details.value='';
     amount.value='';
     alertBox.style.display='none';
@@ -373,19 +714,20 @@ document.getElementById('withdrawBtn').onclick=()=>{
   const det = details.value.trim();
   const amt = parseFloat(amount.value);
   alertBox.style.display='none';
+  const t = TRANSLATIONS[currentLang];
 
-  if(!type){ showErr('Metod seçin'); return; }
-  if(!det){ showErr('Detalları daxil edin'); return; }
-  if(isNaN(amt) || amt <= 0){ showErr('Məbləği düzgün daxil edin'); return; }
-  if(amt < min[type]){ showErr(`Minimum məbləğ ${min[type]} AZN`); return; }
-  if(amt > bal){ showErr('Balans kifayət etmir'); return; }
+  if(!type){ showErr(t.methodError); return; }
+  if(!det){ showErr(t.detailsError); return; }
+  if(isNaN(amt) || amt <= 0){ showErr(t.amountError); return; }
+  if(amt < min[type]){ showErr(t.minAmount.replace('{min}', min[type])); return; }
+  if(amt > bal){ showErr(t.balanceError); return; }
 
   // Çıxarışın göndərilməsi simulyasiyası
   bal -= amt;
   safeSet(BAL_KEY,bal);
   update();
 
-  alertBox.textContent='✅ Çıxarış göndərildi! 48 saat ərzində yerinə yetiriləcək.';
+  alertBox.textContent=t.withdrawSuccess;
   alertBox.className='alert success';
   alertBox.style.display='block';
 
@@ -404,6 +746,19 @@ function showErr(msg){
   alertBox.className='alert error';
   alertBox.style.display='block';
 }
+
+// --- İLKİN YÜKLƏNMƏ VƏ LOADING SCREEN MƏNTİQİ ---
+
+// Funksionallığı yüklə
+update();
+applyTranslations(currentLang); 
+
+// Loading Screen-i 3 saniyədən sonra bağla
+setTimeout(()=>{
+  const s=document.getElementById("loadingScreen");
+  s.style.opacity="0";
+  setTimeout(()=>s.style.display="none",700);
+},3000);
 </script>
 </body>
 </html>
