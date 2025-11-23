@@ -195,6 +195,15 @@ body{
 .alert.error{background:#f8d7da;color:#842029;}
 .alert.success{background:#d1e7dd;color:#0f5132;}
 
+/* YENİ: Dinamik Timer Bar üçün CSS */
+.timer-bar-container {
+  height: 6px;
+  width: 0%;
+  border-radius: 4px;
+  margin-top: 6px;
+  transition: width 1s linear; /* Genişlənməyə yumşaq keçid */
+}
+
 #loadingScreen{position:fixed;top:0; left:0;width:100%; height:100%;background:radial-gradient(circle at 20% 20%, #4e4376, #2b5876 70%);display:flex;justify-content:center;align-items:center;z-index:99999;backdrop-filter:blur(6px);animation:fadeBg 6s linear infinite;transition:opacity .7s ease;}
 @keyframes fadeBg{0%{filter:brightness(1);}50%{filter:brightness(1.3);}100%{filter:brightness(1);}}
 .loader-box{text-align:center;animation:fadeIn .8s ease;position:relative;}
@@ -627,19 +636,52 @@ adBtn.onclick=()=>{
   const t = TRANSLATIONS[currentLang];
   if(cnt>=LIMIT){ msg.textContent=t.adLimitReached; return; }
   adBtn.disabled=true; adBtn.classList.add('waiting');
-  msg.innerHTML=`<span>${t.watching}</span><div id="timerBar" style="height:6px;width:0%;background:var(--accent);border-radius:4px;margin-top:6px;"></div>`;
+  
+  // Timer bar konteynerini yenidən yaradırıq ki, dinamik rəng dəyişikliyi işləsin.
+  // HTML-dəki mövcud timer bar-ı (qırmızı) silib yenisini əlavə edirik.
+  msg.innerHTML=`<span>${t.watching}</span><div id="timerBar" class="timer-bar-container"></div>`;
+  
   try{if(typeof show_10024800==='function'){show_10024800();}}catch(e){} 
+  
   setTimeout(()=>{
-    bal+=REWARD; cnt++; update(); msg.innerHTML=t.rewardAdded;
-    let s=10;
+    bal+=REWARD; cnt++; update(); 
+    
+    let s=10; // Geri sayım saniyəsi
+    const rewardText = t.rewardAdded; // Mükafat mətnini saxlayırıq
+    
     const tInterval=setInterval(()=>{
       s--;
       const timerBar=document.getElementById('timerBar');
-      if(timerBar){timerBar.style.width=`${(10-s)/10*100}%`;timerBar.style.background=`hsl(${(10-s)*36},80%,50%)`;}
-      msg.innerHTML=t.wait.replace('{s}', s)+`<div id="timerBar" style="height:6px;width:${(10-s)/10*100}%;background:var(--accent);border-radius:4px;margin-top:6px;"></div>`;
-      if(s<=0){clearInterval(tInterval);adBtn.disabled=false;adBtn.classList.remove('waiting');msg.textContent='';}
+      
+      if(timerBar){
+          // RƏNGBƏRƏNG VƏ PARILTILI EFFEKT
+          // 0-dan 360-a qədər rəng spektrini əhatə edir
+          const hue = (10 - s) * 36; 
+          const color = `hsl(${hue}, 85%, 50%)`; // Yüksək parlaqlıq və doyğunluq
+          
+          timerBar.style.width=`${(10-s)/10*100}%`;
+          timerBar.style.background=color; 
+          timerBar.style.boxShadow = `0 0 8px ${color}`; // Dinamik parıltı effekti
+      }
+      
+      // Geri sayım mətnini yeniləyirik
+      const waitMsg = t.wait.replace('{s}', s);
+      msg.innerHTML=`<span>${waitMsg}</span><div id="timerBar" class="timer-bar-container" style="width: ${(10-s)/10*100}%; background: ${timerBar ? timerBar.style.background : 'initial'}; box-shadow: ${timerBar ? timerBar.style.boxShadow : 'initial'};"></div>`;
+      
+      // Saniyə bitdikdə
+      if(s<=0){
+        clearInterval(tInterval);
+        adBtn.disabled=false;
+        adBtn.classList.remove('waiting');
+        msg.innerHTML=rewardText; // Mükafat mətnini göstər
+        
+        // Timer bar-ı mükafat mətnindən sonra təmizlə
+        setTimeout(() => {
+             msg.textContent = '';
+        }, 3000); 
+      }
     },1000);
-  },2500);
+  },2500); // 2.5 saniyə gecikmə reklamın göstərilməsi üçün
 };
 
 // Tapşırıqlar Funksiyaları
