@@ -35,12 +35,12 @@ body{
   -webkit-tap-highlight-color:transparent;
 }
 @keyframes bgMove{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
+  0%{background-position:0% 50;}
+  50%{background-position:100% 50;}
+  100%{background-position:0% 50;}
 }
 
-/* DÜZƏLİŞ 3: Yuxarı boşluğu azaltmaq */
+/* Yuxarı boşluğu azaltmaq */
 .container{max-width:480px;margin:auto;padding:20px;padding-top:20px;} 
 
 /* DİL SEÇİMİ (DROPDOWN STİLİ) */
@@ -64,7 +64,6 @@ body{
     display: flex;
     align-items: center;
 }
-/* DÜZƏLİŞ 1: Ok işarəsi üçün məsafə */
 .lang-current-btn span {
     margin-right: 5px; 
 }
@@ -89,7 +88,6 @@ body{
 .lang-dropdown.show {
     display: block;
 }
-/* DÜZƏLİŞ 1: Dropdown düymələrindəki artıq boşluğu aradan qaldırmaq */
 .lang-dropdown button {
     width: 100%;
     padding: 8px 15px;
@@ -97,17 +95,16 @@ body{
     background: none;
     color: var(--text-dark);
     font-weight: 600;
-    text-align: center; /* Mərkəzə gətirdik, ya da sol/sağa align edə bilərsiniz */
+    text-align: center; 
     cursor: pointer;
     transition: background 0.2s;
-    display: block; /* Tam genişliyi əhatə etmək üçün */
+    display: block; 
 }
 
 .lang-dropdown button:hover, .lang-dropdown button.active {
     background: var(--accent);
     color: var(--text-light);
 }
-/* DÜZƏLİŞ 1: Seçilmiş dildə boşluqları düzəltmək üçün */
 .lang-dropdown button {
     text-align: center; 
 }
@@ -176,7 +173,15 @@ body{
 .task-card button{width:100%;margin-top:8px;padding:10px;font-size:13px;font-weight:700;border:none;border-radius:12px;background:linear-gradient(90deg,var(--secondary-btn-gradient-start),var(--secondary-btn-gradient-end)); 
     color:var(--text-light);cursor:pointer;transition:0.3s;}
 .task-card button:hover{transform:scale(1.03);box-shadow:0 0 20px rgba(255,95,109,0.6);}
+/* Düzəliş: Tamamlanmış düymənin CSS-i */
 .task-card button.completed{background:gray !important;box-shadow:none !important;cursor:not-allowed !important;pointer-events:none !important;opacity:0.55;}
+/* Gözləmə CSS-i */
+.task-card button.waiting {
+    background: orange !important;
+    cursor: wait !important;
+    opacity: 0.8;
+}
+
 .stats{display:flex;justify-content:space-around;margin-top:12px;}
 .stat{background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 16px;}
 .stat span{display:block;font-size:16px;font-weight:700;color:var(--text-dark);}
@@ -195,13 +200,14 @@ body{
 .alert.error{background:#f8d7da;color:#842029;}
 .alert.success{background:#d1e7dd;color:#0f5132;}
 
-/* YENİ: Dinamik Timer Bar üçün CSS */
+/* Dinamik Timer Bar üçün CSS */
 .timer-bar-container {
   height: 6px;
   width: 0%;
   border-radius: 4px;
   margin-top: 6px;
-  transition: width 1s linear; /* Genişlənməyə yumşaq keçid */
+  /* Animasiya üçün yumşaq keçid */
+  transition: width 1s linear; 
 }
 
 #loadingScreen{position:fixed;top:0; left:0;width:100%; height:100%;background:radial-gradient(circle at 20% 20%, #4e4376, #2b5876 70%);display:flex;justify-content:center;align-items:center;z-index:99999;backdrop-filter:blur(6px);animation:fadeBg 6s linear infinite;transition:opacity .7s ease;}
@@ -345,7 +351,6 @@ const TRANSLATIONS = {
     'az': {
         pageTitle: 'Qazanc AZ',
         loading: 'Yüklənir...',
-        // DÜZƏLİŞ 2: Tərcümə dəyişiklikləri
         currentBalance: 'Balans',
         withdrawBalance: 'Balans',
         dailyAds: 'Günlük Reklamlar',
@@ -388,12 +393,11 @@ const TRANSLATIONS = {
         placeholderDetails_bank: '16 rəqəmli kart nömrəsi',
         placeholderDetails_usdt: 'TON adresi',
         placeholderAmount: 'Məbləğ (AZN)',
-        completed: 'Tamamlandı',
+        completed: 'Tamamlandı', // 👈 AZ dilində tamamlandı
     },
     'en': {
         pageTitle: 'Qazanc AZ',
         loading: 'Loading...',
-        // DÜZƏLİŞ 2: Tərcümə dəyişiklikləri
         currentBalance: 'Balance',
         withdrawBalance: 'Balance',
         dailyAds: 'Daily Ads',
@@ -406,7 +410,7 @@ const TRANSLATIONS = {
         adLimitReached: '📣 Daily limit reached!',
         watching: 'Watching...',
         rewardAdded: '✅ +0.005 ₼ added!',
-        wait: '⏳ Wait {s}s',
+        wait: '⏳ {s}s wait',
         premiumTask: 'Premium Task',
         bonusTask: 'Bonus Task',
         sponsorTask: 'Sponsor Task',
@@ -436,12 +440,11 @@ const TRANSLATIONS = {
         placeholderDetails_bank: '16 digit card number',
         placeholderDetails_usdt: 'TON address',
         placeholderAmount: 'Amount (AZN)',
-        completed: 'Completed',
+        completed: 'Completed', // 👈 EN dilində tamamlandı
     },
     'tr': {
         pageTitle: 'Kazan AZ',
         loading: 'Yükleniyor...',
-        // DÜZƏLİŞ 2: Tərcümə dəyişiklikləri
         currentBalance: 'Bakiye',
         withdrawBalance: 'Bakiye',
         dailyAds: 'Günlük Reklamlar',
@@ -484,7 +487,7 @@ const TRANSLATIONS = {
         placeholderDetails_bank: '16 haneli kart numarası',
         placeholderDetails_usdt: 'TON adresi',
         placeholderAmount: 'Miktar (AZN)',
-        completed: 'Tamamlandı',
+        completed: 'Tamamlandı', // 👈 TR dilində tamamlandı
     }
 };
 
@@ -492,7 +495,8 @@ let currentLang = localStorage.getItem('lang') || 'az';
 
 const LIMIT = 100, REWARD = 0.005;
 const BAL_KEY='bal',COUNT_KEY='cnt',RESET_KEY='resetTime';
-const JOIN_KEY='joined',JOIN_KEY2='joined2',JOIN_KEY3='joined3',JOIN_KEY4='joined4';
+// Tapşırıq açarları
+const JOIN_KEY='joined',JOIN_KEY2='joined2',JOIN_KEY3='joined3',JOIN_KEY4='joined4'; 
 
 function safeGet(k,d=0){try{return JSON.parse(localStorage.getItem(k))??d;}catch{return d;}}
 function safeSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
@@ -533,24 +537,32 @@ function update(){
   safeSet(COUNT_KEY,cnt);
 }
 
+// Tapşırıqlar düymələrini fərdi olaraq yeniləyən funksiya
 function updateTaskButtons() {
-    const completedText = TRANSLATIONS[currentLang].completed;
-    [JOIN_KEY, JOIN_KEY2, JOIN_KEY3, JOIN_KEY4].forEach((key, index) => {
-        const btnId = `joinBtn${index > 0 ? index : ''}`;
-        const btn = document.getElementById(btnId);
+    const t = TRANSLATIONS[currentLang];
+    
+    taskButtons.forEach(task => {
+        const btn = document.getElementById(task.id);
         if (!btn) return;
         
-        if (localStorage.getItem(key)){
+        // LocalStorage-də tamamlanıbsa
+        if (localStorage.getItem(task.key)){
+            btn.classList.remove('waiting'); // Əgər gözləmədən çıxarıbsa
             btn.classList.add('completed');
-            btn.textContent = completedText;
-            btn.disabled=true; 
+            btn.textContent = t.completed;
+            btn.disabled = true; 
         } else {
-             btn.classList.remove('completed');
-             btn.disabled=false; 
-             const key = btn.getAttribute('data-translate-key');
-             if(TRANSLATIONS[currentLang][key]) {
-                 btn.textContent = TRANSLATIONS[currentLang][key];
-             }
+            // Əgər düymə hazırda gözləmədə deyilsə, normal vəziyyətinə qaytar.
+            if (!btn.classList.contains('waiting')) {
+                 btn.classList.remove('completed');
+                 btn.disabled = false;
+                 
+                 // Düymənin orijinal mətnini bərpa et (Tərcümədən istifadə edərək)
+                 const key = btn.getAttribute('data-translate-key');
+                 if(t[key]) {
+                     btn.textContent = t[key];
+                 }
+            }
         }
     });
 }
@@ -571,7 +583,7 @@ function applyTranslations(lang) {
     document.getElementById('pageTitle').textContent = t.pageTitle;
     document.getElementById('currentLangDisplay').textContent = lang.toUpperCase(); 
     
-    // DÜZƏLİŞ 1: Ok işarəsini cari dilin yanında göstər
+    // Ok işarəsini cari dilin yanında göstər
     document.getElementById('langArrow').textContent = '⬇️'; 
 
     // Aktiv dil düyməsini dropdown-da qeyd et
@@ -607,11 +619,10 @@ function applyTranslations(lang) {
     });
 }
 
-// YENİ: Açılan menyu funksiyası
+// Açılan menyu funksiyası
 function toggleDropdown() {
     const dropdown = document.getElementById('langDropdown');
     dropdown.classList.toggle('show');
-    // Dropdown bağlananda ok işarəsini sil, açılınca göstər
     document.getElementById('langArrow').textContent = dropdown.classList.contains('show') ? '⬇️' : '';
 }
 
@@ -619,11 +630,10 @@ function setLang(lang) {
     currentLang = lang;
     localStorage.setItem('lang', lang);
     
-    // Seçim edildikdən sonra oxu gizlət, menyu bağlanacaq
     document.getElementById('langArrow').textContent = ''; 
     
     applyTranslations(lang);
-    toggleDropdown(); // Seçim edildikdən sonra bağla
+    toggleDropdown(); 
     
     if (document.getElementById('form').style.display === 'block') {
         setPlaceholders(type);
@@ -635,56 +645,79 @@ const adBtn=document.getElementById('adBtn'), msg=document.getElementById('msg')
 adBtn.onclick=()=>{
   const t = TRANSLATIONS[currentLang];
   if(cnt>=LIMIT){ msg.textContent=t.adLimitReached; return; }
-  adBtn.disabled=true; adBtn.classList.add('waiting');
   
-  // Timer bar konteynerini yenidən yaradırıq ki, dinamik rəng dəyişikliyi işləsin.
-  // HTML-dəki mövcud timer bar-ı (qırmızı) silib yenisini əlavə edirik.
-  msg.innerHTML=`<span>${t.watching}</span><div id="timerBar" class="timer-bar-container"></div>`;
+  adBtn.disabled=true; 
+  adBtn.classList.add('waiting');
   
+  let s=10; // Geri sayım saniyəsi
+  
+  // Mesaj və Timer Barı ilkin vəziyyətdə göstər
+  msg.innerHTML=`<span>${t.wait.replace('{s}', s)}</span><div id="timerBar" class="timer-bar-container"></div>`;
+
+  // Reklamı göstər (mümkünsə)
   try{if(typeof show_10024800==='function'){show_10024800();}}catch(e){} 
   
-  setTimeout(()=>{
-    bal+=REWARD; cnt++; update(); 
+  let rewarded = false; 
+
+  const tInterval=setInterval(()=>{
+    s--;
+    const timerBar=document.getElementById('timerBar');
     
-    let s=10; // Geri sayım saniyəsi
-    const rewardText = t.rewardAdded; // Mükafat mətnini saxlayırıq
-    
-    const tInterval=setInterval(()=>{
-      s--;
-      const timerBar=document.getElementById('timerBar');
-      
-      if(timerBar){
-          // RƏNGBƏRƏNG VƏ PARILTILI EFFEKT
-          // 0-dan 360-a qədər rəng spektrini əhatə edir
-          const hue = (10 - s) * 36; 
-          const color = `hsl(${hue}, 85%, 50%)`; // Yüksək parlaqlıq və doyğunluq
-          
-          timerBar.style.width=`${(10-s)/10*100}%`;
-          timerBar.style.background=color; 
-          timerBar.style.boxShadow = `0 0 8px ${color}`; // Dinamik parıltı effekti
-      }
-      
-      // Geri sayım mətnini yeniləyirik
-      const waitMsg = t.wait.replace('{s}', s);
-      msg.innerHTML=`<span>${waitMsg}</span><div id="timerBar" class="timer-bar-container" style="width: ${(10-s)/10*100}%; background: ${timerBar ? timerBar.style.background : 'initial'}; box-shadow: ${timerBar ? timerBar.style.boxShadow : 'initial'};"></div>`;
-      
-      // Saniyə bitdikdə
-      if(s<=0){
-        clearInterval(tInterval);
-        adBtn.disabled=false;
-        adBtn.classList.remove('waiting');
-        msg.innerHTML=rewardText; // Mükafat mətnini göstər
+    // Barın dolmasını tənzimlə
+    if(timerBar){
+        const progressPercentage = (10 - s) / 10 * 100;
+        const hue = (10 - s) * 36; 
+        const color = `hsl(${hue}, 85%, 50%)`; 
         
-        // Timer bar-ı mükafat mətnindən sonra təmizlə
+        timerBar.style.width=`${progressPercentage}%`;
+        timerBar.style.background=color; 
+        timerBar.style.boxShadow = `0 0 8px ${color}`; 
+    }
+    
+    // PUL ƏLAVƏ EDİLMƏSİ (1 saniyə keçdikdə, yəni s==9 olanda)
+    if(s === 9 && !rewarded) { 
+        bal+=REWARD; 
+        cnt++; 
+        update(); 
+        rewarded = true; 
+        
+        // Mükafat mesajını yaradırıq
+        const rewardMsgElement = document.createElement('div');
+        rewardMsgElement.innerHTML = t.rewardAdded;
+        rewardMsgElement.style.marginTop = '10px';
+        rewardMsgElement.style.fontWeight = 'bold';
+        rewardMsgElement.id = 'rewardMsg';
+        msg.appendChild(rewardMsgElement); 
+        
+        // MÜKAFAT MESAJININ GİZLƏDİLMƏSİ (1 saniyə sonra)
         setTimeout(() => {
-             msg.textContent = '';
-        }, 3000); 
-      }
-    },1000);
-  },2500); // 2.5 saniyə gecikmə reklamın göstərilməsi üçün
+            const currentRewardMsg = document.getElementById('rewardMsg');
+            if (currentRewardMsg) {
+                 currentRewardMsg.remove();
+            }
+        }, 1000); // 1000ms = 1 saniyə
+    }
+    
+    // Geri sayım mətnini yeniləyirik
+    const msgSpan = msg.querySelector('span');
+    if (msgSpan) msgSpan.textContent = t.wait.replace('{s}', s);
+    
+    // 10 saniyə bitdikdə
+    if(s<=0){
+      clearInterval(tInterval);
+      
+      // Düyməni aktiv et və mesajı təmizlə
+      adBtn.disabled=false;
+      adBtn.classList.remove('waiting');
+      
+      // Mesajı təmizlə
+      msg.textContent = ''; 
+    }
+  },1000);
 };
 
-// Tapşırıqlar Funksiyaları
+
+// --- YENİLƏNMİŞ TAPŞIRIQLAR FUNKSİYALARI (GERİ SAYIMSIZ, 3 SANİYƏ GECİKMƏ İLƏ) ---
 const taskButtons = [
     { id: 'joinBtn', key: JOIN_KEY, reward: 0.1, url: 'https://t.me/qazancazicmasi' },
     { id: 'joinBtn2', key: JOIN_KEY2, reward: 0.1, url: 'https://t.me/qazancazchat' },
@@ -692,26 +725,58 @@ const taskButtons = [
     { id: 'joinBtn4', key: JOIN_KEY4, reward: 0.05, url: 'https://t.me/ads_reklam69' }
 ];
 
+// Bütün tapşırıqları dövr edib klik funksiyasını əlavə edirik
 taskButtons.forEach(task => {
     const btn = document.getElementById(task.id);
     if (!btn) return;
     
-    // Tapşırıq tamamlanıbsa düyməni sıradan çıxar
-    if(localStorage.getItem(task.key)){
+    // Yüklənmə zamanı ilkin yoxlama
+    if (localStorage.getItem(task.key)){
+        const completedText = TRANSLATIONS[currentLang].completed;
         btn.classList.add('completed');
+        btn.textContent = completedText;
         btn.disabled=true;
     }
     
-    btn.onclick=()=>{
-        if(localStorage.getItem(task.key))return;
-        bal+=task.reward;
-        safeSet(BAL_KEY,bal);
-        localStorage.setItem(task.key,'1');
-        btn.classList.add('completed');
-        btn.disabled=true;
-        window.open(task.url,'_blank');
-        update();
-        updateTaskButtons();
+    btn.onclick = () => {
+        // Klik olunan zaman təkrar yoxlama
+        if (localStorage.getItem(task.key) || btn.disabled) {
+            return; // Əgər artıq tamamlanıbsa və ya rəqabətdədirsə, heç nə etmə.
+        }
+        
+        const t = TRANSLATIONS[currentLang];
+
+        // 1. Kanala/Qrupa aç
+        window.open(task.url, '_blank');
+        
+        // 2. Düyməni dərhal deaktiv et və "Gözləyin" mesajını göstər
+        btn.disabled = true;
+        btn.classList.add('waiting'); 
+        btn.textContent = t.wait.replace('{s}', '3'); // "3s gözləyin" kimi göstər
+        
+        // 3. 3 saniyə gözlə
+        setTimeout(() => {
+            
+            // 4. Pulun əlavə edilməsi
+            bal += task.reward;
+            safeSet(BAL_KEY, bal);
+            
+            // 5. LocalStorage-də tamamlanmış kimi qeyd et
+            localStorage.setItem(task.key, '1');
+            
+            // 6. Balansı yenilə
+            update();
+            
+            // 7. Düyməni "Tamamlandı" et və waiting class-ını sil
+            btn.classList.remove('waiting');
+            btn.classList.add('completed');
+            btn.textContent = t.completed;
+            btn.disabled = true;
+            
+            // Mükafatın əlavə edildiyi barədə mesaj
+            console.log(`✅ +${task.reward} ₼ əlavə olundu!`);
+            
+        }, 3000); // 3000ms = 3 saniyə
     };
 });
 
@@ -721,6 +786,11 @@ function showPage(id, btn){
   document.getElementById(id).classList.add('active');
   document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+  
+  // Tapşırıqlar səhifəsinə keçəndə düymələri yenilə
+  if (id === 'tasksPage') {
+    updateTaskButtons();
+  }
 }
 
 // Cüzdan çıxarış sistemi
