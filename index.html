@@ -260,7 +260,7 @@ body{
 
     <div class="ad-card">
       <h2 data-translate-key="dailyAds">Günlük Reklamlar</h2>
-      <p data-translate-key="adReward">Hər reklama görə <b>0.005 ₼</b> qazanın</p>
+      <p data-translate-key="adReward">Hər reklama görə <b>0.002 ₼</b> qazanın</p>
       <div class="stats">
         <div class="stat"><span id="adsCount">0</span><label data-translate-key="watched">İzlənən</label></div>
         <div class="stat"><span data-translate-key="maxCount">100</span><label data-translate-key="maximum">Maksimum</label></div>
@@ -354,7 +354,7 @@ const TRANSLATIONS = {
         currentBalance: 'Balans',
         withdrawBalance: 'Balans',
         dailyAds: 'Günlük Reklamlar',
-        adReward: 'Hər reklama görə <b>0.005 ₼</b> qazanın',
+        adReward: 'Hər reklama görə <b>0.002 ₼</b> qazanın', 
         watched: 'İzlənən',
         maximum: 'Maksimum',
         maxCount: '100',
@@ -362,7 +362,7 @@ const TRANSLATIONS = {
         watchAd: 'Reklam İzle',
         adLimitReached: '📣 Gündəlik limitə çatdınız!',
         watching: 'İzlənir...',
-        rewardAdded: '✅ +0.005 ₼ əlavə olundu!',
+        rewardAdded: '✅ +0.002 ₼ əlavə olundu!', 
         wait: '⏳ {s}s gözləyin',
         premiumTask: 'Premium Tapşırıq',
         bonusTask: 'Bonus Tapşırıq',
@@ -393,7 +393,7 @@ const TRANSLATIONS = {
         placeholderDetails_bank: '16 rəqəmli kart nömrəsi',
         placeholderDetails_usdt: 'TON adresi',
         placeholderAmount: 'Məbləğ (AZN)',
-        completed: 'Tamamlandı', // 👈 AZ dilində tamamlandı
+        completed: 'Tamamlandı', 
     },
     'en': {
         pageTitle: 'Qazanc AZ',
@@ -401,7 +401,7 @@ const TRANSLATIONS = {
         currentBalance: 'Balance',
         withdrawBalance: 'Balance',
         dailyAds: 'Daily Ads',
-        adReward: 'Earn <b>0.005 ₼</b> for each ad',
+        adReward: 'Earn <b>0.002 ₼</b> for each ad', 
         watched: 'Watched',
         maximum: 'Maximum',
         maxCount: '100',
@@ -409,7 +409,7 @@ const TRANSLATIONS = {
         watchAd: 'Watch Ad',
         adLimitReached: '📣 Daily limit reached!',
         watching: 'Watching...',
-        rewardAdded: '✅ +0.005 ₼ added!',
+        rewardAdded: '✅ +0.002 ₼ added!', 
         wait: '⏳ {s}s wait',
         premiumTask: 'Premium Task',
         bonusTask: 'Bonus Task',
@@ -440,7 +440,7 @@ const TRANSLATIONS = {
         placeholderDetails_bank: '16 digit card number',
         placeholderDetails_usdt: 'TON address',
         placeholderAmount: 'Amount (AZN)',
-        completed: 'Completed', // 👈 EN dilində tamamlandı
+        completed: 'Completed', 
     },
     'tr': {
         pageTitle: 'Kazan AZ',
@@ -448,7 +448,7 @@ const TRANSLATIONS = {
         currentBalance: 'Bakiye',
         withdrawBalance: 'Bakiye',
         dailyAds: 'Günlük Reklamlar',
-        adReward: 'Her reklam için <b>0.005 ₼</b> kazanın',
+        adReward: 'Her reklam için <b>0.002 ₼</b> kazanın', 
         watched: 'İzlenen',
         maximum: 'Maksimum',
         maxCount: '100',
@@ -456,7 +456,7 @@ const TRANSLATIONS = {
         watchAd: 'Reklam İzle',
         adLimitReached: '📣 Günlük sınıra ulaştınız!',
         watching: 'İzleniyor...',
-        rewardAdded: '✅ +0.005 ₼ eklendi!',
+        rewardAdded: '✅ +0.002 ₼ eklendi!', 
         wait: '⏳ {s}sn bekleyin',
         premiumTask: 'Premium Görev',
         bonusTask: 'Bonus Görev',
@@ -487,13 +487,13 @@ const TRANSLATIONS = {
         placeholderDetails_bank: '16 haneli kart numarası',
         placeholderDetails_usdt: 'TON adresi',
         placeholderAmount: 'Miktar (AZN)',
-        completed: 'Tamamlandı', // 👈 TR dilində tamamlandı
+        completed: 'Tamamlandı', 
     }
 };
 
 let currentLang = localStorage.getItem('lang') || 'az';
 
-const LIMIT = 100, REWARD = 0.005;
+const LIMIT = 100, REWARD = 0.002; 
 const BAL_KEY='bal',COUNT_KEY='cnt',RESET_KEY='resetTime';
 // Tapşırıq açarları
 const JOIN_KEY='joined',JOIN_KEY2='joined2',JOIN_KEY3='joined3',JOIN_KEY4='joined4'; 
@@ -689,13 +689,13 @@ adBtn.onclick=()=>{
         rewardMsgElement.id = 'rewardMsg';
         msg.appendChild(rewardMsgElement); 
         
-        // MÜKAFAT MESAJININ GİZLƏDİLMƏSİ (1 saniyə sonra)
+        // MÜKAFAT MESAJININ GİZLƏDİLMƏSİ (2 saniyə sonra)
         setTimeout(() => {
             const currentRewardMsg = document.getElementById('rewardMsg');
             if (currentRewardMsg) {
                  currentRewardMsg.remove();
             }
-        }, 1000); // 1000ms = 1 saniyə
+        }, 2000); // 2000ms = 2 saniyə
     }
     
     // Geri sayım mətnini yeniləyirik
@@ -801,7 +801,8 @@ const amount = document.getElementById('amount');
 const alertBox = document.getElementById('alert');
 let type = '';
 
-const min = { m10:10, azercell:10, bakcell:10, nar:10, bank:10, usdt:17 };
+// YENİ MİNİMUM LİMİT - Bütün operatorlar və bank üçün 5 AZN
+const min = { m10:5, azercell:5, bakcell:5, nar:5, bank:5, usdt:17 };
 
 methods.forEach(m=>{
   m.onclick=()=>{
