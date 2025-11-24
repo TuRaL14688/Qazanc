@@ -146,6 +146,7 @@ body{
     align-items: center;
     justify-content: center;
     height: 100px;
+    position: relative; /* Minimum məbləğ üçün */
 }
 .method:hover{transform:scale(1.03);box-shadow:0 0 10px rgba(0,0,0,0.2);}
 .method-logo{
@@ -163,6 +164,18 @@ body{
 }
 .method-text {
     font-size: 14px;
+}
+/* Minimum Çıxarış CSS-i */
+.min-withdraw-label {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 1px 4px;
+    border-radius: 4px;
 }
 .ad-card{background:var(--card-bg);border-radius:16px;padding:16px 18px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,0.25);backdrop-filter:blur(12px);border:1px solid var(--card-border);margin-bottom:12px;}
 .ad-card h2{font-size:18px;color:var(--text-dark);margin-bottom:6px;}
@@ -249,13 +262,14 @@ body{
         <button onclick="setLang('az')" id="langAzBtn">AZ</button>
         <button onclick="setLang('en')" id="langEnBtn">EN</button>
         <button onclick="setLang('tr')" id="langTrBtn">TR</button>
+        <button onclick="setLang('ru')" id="langRuBtn">RU</button>
     </div>
   </div>
   <div id="adsPage" class="page active">
     <div class="balance-card">
       <h3 data-translate-key="currentBalance">Balans</h3>
-      <div class="amount"><span id="balance">0.0000</span> ₼</div>
-      <div class="usd">$<span id="balanceUSD">0.0000</span> USDT</div>
+      <div class="amount"><span id="balance">0.0000</span> <span id="currencySymbol">₼</span></div>
+      <div class="usd"><span id="secondaryCurrencySymbol">$</span><span id="secondaryBalance">0.0000</span> <span id="secondaryCurrencyText">USD</span></div>
     </div>
 
     <div class="ad-card">
@@ -298,8 +312,8 @@ body{
   <div id="walletPage" class="page">
     <div class="balance-card">
       <h3 data-translate-key="withdrawBalance">Balans</h3>
-      <div class="amount"><span id="balance2">0.0000</span> ₼</div>
-      <div class="usd">$<span id="balanceUSD2">0.0000</span> USDT</div>
+      <div class="amount"><span id="balance2">0.0000</span> <span id="currencySymbol2">₼</span></div>
+      <div class="usd"><span id="secondaryCurrencySymbol2">$</span><span id="secondaryBalance2">0.0000</span> <span id="secondaryCurrencyText2">USD</span></div>
     </div>
     <h2 style="text-align:center;margin-bottom:12px;color:#000000;" data-translate-key="withdrawTitle">Çıxarış</h2>
     <div class="method-list" id="methods">
@@ -307,32 +321,38 @@ body{
       <div class="method" data-type="m10">
           <img src="https://i.postimg.cc/Kj94hVNG/unnamed.png" alt="M10 Logo" class="method-logo">
           <span class="method-text">M10</span>
+          <span class="min-withdraw-label" data-min-key="m10">5 ₼</span>
       </div>
       <div class="method" data-type="azercell">
           <img src="https://i.postimg.cc/qM5gmPqZ/applogo512.png" alt="Azercell Logo" class="method-logo">
           <span class="method-text">Azercell</span>
+          <span class="min-withdraw-label" data-min-key="azercell">5 ₼</span>
       </div>
       <div class="method" data-type="bakcell">
           <img src="https://i.postimg.cc/Pqmx5N49/images.jpg" alt="Bakcell Logo" class="method-logo">
           <span class="method-text">Bakcell</span>
+          <span class="min-withdraw-label" data-min-key="bakcell">5 ₼</span>
       </div>
       <div class="method" data-type="nar">
           <img src="https://i.postimg.cc/4NmxhWPy/images.png" alt="Nar Logo" class="method-logo">
           <span class="method-text">Nar</span>
+          <span class="min-withdraw-label" data-min-key="nar">5 ₼</span>
       </div>
       <div class="method" data-type="bank">
           <img src="https://i.postimg.cc/L6H0yWwZ/42492-bank-1024.png" alt="Bank Logo" class="method-logo bank-logo">
           <span class="method-text" data-translate-key="bankCard">Bank</span>
+          <span class="min-withdraw-label" data-min-key="bank">5 ₼</span>
       </div>
       <div class="method" data-type="usdt">
           <img src="https://i.postimg.cc/X7HxsY98/Tether-USDT-Logo.png" alt="USDT Logo" class="method-logo">
           <span class="method-text">USDT</span>
+          <span class="min-withdraw-label" data-min-key="usdt">17 ₼</span>
       </div>
     </div>
     <div class="form" id="form">
       <button id="backBtn" style="background:none;border:none;color:var(--accent);font-weight:700;">⬅ <span data-translate-key="back">Geri</span></button>
       <input id="details" placeholder="">
-      <input id="amount" type="number" placeholder="Məbləğ (AZN)">
+      <input id="amount" type="number" placeholder="Məbləğ">
       <button id="withdrawBtn" data-translate-key="withdraw">Çıxarış Et</button>
       <div id="alert" class="alert"></div>
     </div>
@@ -346,7 +366,67 @@ body{
   <button onclick="showPage('walletPage',this)" data-translate-key="wallet">Cüzdan</button>
 </div>
 <script>
+// --- VALYUTA VƏ MƏZƏNNƏLƏR ---
+const EXCHANGE_RATES = {
+    AZN_TO_USD: 0.59, 
+    AZN_TO_TRY: 25.00,  
+    AZN_TO_RUB: 46.45 // YENİ MƏZƏNNƏ: 1 AZN = 46.45 RUB
+};
+const CURRENCIES = {
+    'az': { main: 'AZN', symbol: '₼', secondary: 'USD', secondarySymbol: '$' },
+    'tr': { main: 'TRY', symbol: '₺', secondary: 'USD', secondarySymbol: '$' },
+    'en': { main: 'USD', symbol: '$', secondary: 'AZN', secondarySymbol: '₼' },
+    'ru': { main: 'RUB', symbol: '₽', secondary: 'USD', secondarySymbol: '$' } // YENİ VALYUTA
+};
+const AZN_REWARD = 0.002;
+const AZN_TASK_REWARDS = [0.1, 0.1, 0.15, 0.05]; 
+// Minimum limitlər AZN ilə
+const AZN_MIN_WITHDRAW = { m10: 5, azercell: 5, bakcell: 5, nar: 5, bank: 5, usdt: 17 }; 
+
 // --- TƏRCÜMƏ MƏLUMATLARI (DİL SÖZLÜYÜ) ---
+function getLocalizedReward(lang) {
+    let reward = AZN_REWARD;
+    let symbol = CURRENCIES[lang].symbol;
+    let currency = CURRENCIES[lang].main;
+    let format = (val) => val.toFixed(3); 
+
+    if (lang === 'tr') {
+        reward = AZN_REWARD * EXCHANGE_RATES.AZN_TO_TRY;
+        format = (val) => val.toFixed(2);
+    } else if (lang === 'en') {
+        reward = AZN_REWARD * EXCHANGE_RATES.AZN_TO_USD;
+        format = (val) => val.toFixed(4);
+    } else if (lang === 'ru') {
+        reward = AZN_REWARD * EXCHANGE_RATES.AZN_TO_RUB;
+        format = (val) => val.toFixed(2); 
+    }
+    
+    return {
+        reward: reward,
+        formattedReward: format(reward),
+        symbol: symbol,
+        currency: currency
+    };
+}
+
+function getLocalizedTaskReward(lang, aznReward) {
+    let symbol = CURRENCIES[lang].symbol;
+    let format = (val) => val.toFixed(2); 
+
+    let localizedReward = aznReward;
+
+    if (lang === 'tr') {
+        localizedReward = aznReward * EXCHANGE_RATES.AZN_TO_TRY;
+    } else if (lang === 'en') {
+        localizedReward = aznReward * EXCHANGE_RATES.AZN_TO_USD;
+        format = (val) => val.toFixed(3);
+    } else if (lang === 'ru') {
+        localizedReward = aznReward * EXCHANGE_RATES.AZN_TO_RUB;
+    }
+    
+    return `<b>${format(localizedReward)} ${symbol}</b>`;
+}
+
 const TRANSLATIONS = {
     'az': {
         pageTitle: 'Qazanc AZ',
@@ -354,7 +434,7 @@ const TRANSLATIONS = {
         currentBalance: 'Balans',
         withdrawBalance: 'Balans',
         dailyAds: 'Günlük Reklamlar',
-        adReward: 'Hər reklama görə <b>0.002 ₼</b> qazanın', 
+        adReward: (r) => `Hər reklama görə ${r} qazanın`, 
         watched: 'İzlənən',
         maximum: 'Maksimum',
         maxCount: '100',
@@ -362,15 +442,15 @@ const TRANSLATIONS = {
         watchAd: 'Reklam İzle',
         adLimitReached: '📣 Gündəlik limitə çatdınız!',
         watching: 'İzlənir...',
-        rewardAdded: '✅ +0.002 ₼ əlavə olundu!', 
+        rewardAdded: (r) => `✅ ${r} əlavə olundu!`, 
         wait: '⏳ {s}s gözləyin',
         premiumTask: 'Premium Tapşırıq',
         bonusTask: 'Bonus Tapşırıq',
         sponsorTask: 'Sponsor Tapşırıq',
-        taskReward1: 'Kanala qoşul və <b>0.1 ₼</b> qazan!',
-        taskReward2: 'Qrupa qoşul və <b>0.1 ₼</b> qazan!',
-        taskReward3: 'Kanala qoşul və <b>0.15 ₼</b> qazan!',
-        taskReward4: 'Kanala qoşul və <b>0.05 ₼</b> qazan!',
+        taskReward1: (r) => `Kanala qoşul və ${r} qazan!`,
+        taskReward2: (r) => `Qrupa qoşul və ${r} qazan!`,
+        taskReward3: (r) => `Kanala qoşul və ${r} qazan!`,
+        taskReward4: (r) => `Kanala qoşul və ${r} qazan!`,
         joinChannel: 'Kanala Qoşul',
         joinGroup: 'Qrupa Qoşul',
         withdrawTitle: 'Çıxarış',
@@ -380,7 +460,7 @@ const TRANSLATIONS = {
         methodError: 'Metod seçin',
         detailsError: 'Detalları daxil edin',
         amountError: 'Məbləği düzgün daxil edin',
-        minAmount: 'Minimum məbləğ {min} AZN',
+        minAmount: (min) => `Minimum məbləğ ${min}`, // AZN üçün düzəliş edildi
         balanceError: 'Balans kifayət etmir',
         withdrawSuccess: '✅ Çıxarış göndərildi! 48 saat ərzində yerinə yetiriləcək.',
         home: 'Ev',
@@ -392,16 +472,16 @@ const TRANSLATIONS = {
         placeholderDetails_nar: '070xxxxxxx',
         placeholderDetails_bank: '16 rəqəmli kart nömrəsi',
         placeholderDetails_usdt: 'TON adresi',
-        placeholderAmount: 'Məbləğ (AZN)',
+        placeholderAmount: 'Məbləğ',
         completed: 'Tamamlandı', 
     },
     'en': {
-        pageTitle: 'Qazanc AZ',
+        pageTitle: 'Earn AZ',
         loading: 'Loading...',
         currentBalance: 'Balance',
         withdrawBalance: 'Balance',
         dailyAds: 'Daily Ads',
-        adReward: 'Earn <b>0.002 ₼</b> for each ad', 
+        adReward: (r) => `Earn ${r} for each ad`, 
         watched: 'Watched',
         maximum: 'Maximum',
         maxCount: '100',
@@ -409,15 +489,15 @@ const TRANSLATIONS = {
         watchAd: 'Watch Ad',
         adLimitReached: '📣 Daily limit reached!',
         watching: 'Watching...',
-        rewardAdded: '✅ +0.002 ₼ added!', 
+        rewardAdded: (r) => `✅ ${r} added!`, 
         wait: '⏳ {s}s wait',
         premiumTask: 'Premium Task',
         bonusTask: 'Bonus Task',
         sponsorTask: 'Sponsor Task',
-        taskReward1: 'Join channel and earn <b>0.1 ₼</b>!',
-        taskReward2: 'Join group and earn <b>0.1 ₼</b>!',
-        taskReward3: 'Join channel and earn <b>0.15 ₼</b>!',
-        taskReward4: 'Join channel and earn <b>0.05 ₼</b>!',
+        taskReward1: (r) => `Join channel and earn ${r}!`,
+        taskReward2: (r) => `Join group and earn ${r}!`,
+        taskReward3: (r) => `Join channel and earn ${r}!`,
+        taskReward4: (r) => `Join channel and earn ${r}!`,
         joinChannel: 'Join Channel',
         joinGroup: 'Join Group',
         withdrawTitle: 'Withdrawal',
@@ -427,7 +507,7 @@ const TRANSLATIONS = {
         methodError: 'Select a method',
         detailsError: 'Enter details',
         amountError: 'Enter correct amount',
-        minAmount: 'Minimum amount {min} AZN',
+        minAmount: (min) => `Minimum amount ${min}`,
         balanceError: 'Insufficient balance',
         withdrawSuccess: '✅ Withdrawal sent! It will be executed within 48 hours.',
         home: 'Home',
@@ -439,7 +519,7 @@ const TRANSLATIONS = {
         placeholderDetails_nar: '070xxxxxxx',
         placeholderDetails_bank: '16 digit card number',
         placeholderDetails_usdt: 'TON address',
-        placeholderAmount: 'Amount (AZN)',
+        placeholderAmount: 'Amount',
         completed: 'Completed', 
     },
     'tr': {
@@ -448,7 +528,7 @@ const TRANSLATIONS = {
         currentBalance: 'Bakiye',
         withdrawBalance: 'Bakiye',
         dailyAds: 'Günlük Reklamlar',
-        adReward: 'Her reklam için <b>0.002 ₼</b> kazanın', 
+        adReward: (r) => `Her reklam için ${r} kazanın`, 
         watched: 'İzlenen',
         maximum: 'Maksimum',
         maxCount: '100',
@@ -456,15 +536,15 @@ const TRANSLATIONS = {
         watchAd: 'Reklam İzle',
         adLimitReached: '📣 Günlük sınıra ulaştınız!',
         watching: 'İzleniyor...',
-        rewardAdded: '✅ +0.002 ₼ eklendi!', 
+        rewardAdded: (r) => `✅ ${r} eklendi!`, 
         wait: '⏳ {s}sn bekleyin',
         premiumTask: 'Premium Görev',
         bonusTask: 'Bonus Görev',
         sponsorTask: 'Sponsor Görevi',
-        taskReward1: 'Kanala katıl ve <b>0.1 ₼</b> kazan!',
-        taskReward2: 'Gruba katıl ve <b>0.1 ₼</b> kazan!',
-        taskReward3: 'Kanala katıl ve <b>0.15 ₼</b> kazan!',
-        taskReward4: 'Kanala katıl ve <b>0.05 ₼</b> kazan!',
+        taskReward1: (r) => `Kanala katıl ve ${r} kazan!`,
+        taskReward2: (r) => `Gruba katıl ve ${r} kazan!`,
+        taskReward3: (r) => `Kanala katıl ve ${r} kazan!`,
+        taskReward4: (r) => `Kanala katıl ve ${r} kazan!`,
         joinChannel: 'Kanala Katıl',
         joinGroup: 'Gruba Katıl',
         withdrawTitle: 'Para Çekme',
@@ -474,7 +554,7 @@ const TRANSLATIONS = {
         methodError: 'Yöntem seçin',
         detailsError: 'Bilgileri girin',
         amountError: 'Miktarı doğru girin',
-        minAmount: 'Minimum miktar {min} AZN',
+        minAmount: (min) => `Minimum miktar ${min}`,
         balanceError: 'Yetersiz bakiye',
         withdrawSuccess: '✅ Çekim talebi gönderildi! 48 saat içinde tamamlanacaktır.',
         home: 'Ana Sayfa',
@@ -486,16 +566,62 @@ const TRANSLATIONS = {
         placeholderDetails_nar: '070xxxxxxx',
         placeholderDetails_bank: '16 haneli kart numarası',
         placeholderDetails_usdt: 'TON adresi',
-        placeholderAmount: 'Miktar (AZN)',
+        placeholderAmount: 'Miktar',
         completed: 'Tamamlandı', 
+    },
+    'ru': { // RUS DİLİ ƏLAVƏ EDİLDİ
+        pageTitle: 'Заработок AZ',
+        loading: 'Загрузка...',
+        currentBalance: 'Баланс',
+        withdrawBalance: 'Баланс',
+        dailyAds: 'Ежедневная Реклама',
+        adReward: (r) => `Зарабатывайте ${r} за каждую рекламу`, 
+        watched: 'Просмотрено',
+        maximum: 'Максимум',
+        maxCount: '100',
+        progressText: 'Прогресс: ',
+        watchAd: 'Смотреть Рекламу',
+        adLimitReached: '📣 Достигнут дневной лимит!',
+        watching: 'Просмотр...',
+        rewardAdded: (r) => `✅ ${r} добавлено!`, 
+        wait: '⏳ {s}с ожидайте',
+        premiumTask: 'Премиум Задание',
+        bonusTask: 'Бонусное Задание',
+        sponsorTask: 'Спонсорское Задание',
+        taskReward1: (r) => `Подпишитесь на канал и заработайте ${r}!`,
+        taskReward2: (r) => `Присоединитесь к группе и заработайте ${r}!`,
+        taskReward3: (r) => `Подпишитесь на канал и заработайте ${r}!`,
+        taskReward4: (r) => `Подпишитесь на канал и заработайте ${r}!`,
+        joinChannel: 'Подписаться',
+        joinGroup: 'Вступить в Группу',
+        withdrawTitle: 'Вывод Средств',
+        bankCard: 'Банковская Карта',
+        back: 'Назад',
+        withdraw: 'Вывести',
+        methodError: 'Выберите способ',
+        detailsError: 'Введите данные',
+        amountError: 'Введите правильную сумму',
+        minAmount: (min) => `Минимальная сумма ${min}`,
+        balanceError: 'Недостаточно средств',
+        withdrawSuccess: '✅ Заявка отправлена! Будет исполнена в течение 48 часов.',
+        home: 'Главная',
+        tasks: 'Задания',
+        wallet: 'Кошелек',
+        placeholderDetails_m10: '10-значный номер M10',
+        placeholderDetails_azercell: '050xxxxxxx',
+        placeholderDetails_bakcell: '055xxxxxxx',
+        placeholderDetails_nar: '070xxxxxxx',
+        placeholderDetails_bank: '16-значный номер карты',
+        placeholderDetails_usdt: 'TON адрес',
+        placeholderAmount: 'Сумма',
+        completed: 'Выполнено', 
     }
 };
 
 let currentLang = localStorage.getItem('lang') || 'az';
 
-const LIMIT = 100, REWARD = 0.002; 
+const LIMIT = 100;
 const BAL_KEY='bal',COUNT_KEY='cnt',RESET_KEY='resetTime';
-// Tapşırıq açarları
 const JOIN_KEY='joined',JOIN_KEY2='joined2',JOIN_KEY3='joined3',JOIN_KEY4='joined4'; 
 
 function safeGet(k,d=0){try{return JSON.parse(localStorage.getItem(k))??d;}catch{return d;}}
@@ -523,12 +649,59 @@ if(!resetTime||Date.now()>resetTime){
   safeSet(COUNT_KEY,cnt);
 }
 
+// Balansın və Valyutanın göstərilməsi
 function update(){
-  document.getElementById('balance').textContent=bal.toFixed(4);
-  document.getElementById('balance2').textContent=bal.toFixed(4);
-  const usdt=bal/1.7; 
-  document.getElementById('balanceUSD').textContent=usdt.toFixed(4);
-  document.getElementById('balanceUSD2').textContent=usdt.toFixed(4);
+  const lang = currentLang;
+  const rates = EXCHANGE_RATES;
+  const currencyInfo = CURRENCIES[lang];
+  
+  let mainBalance = bal;
+  let secondaryBalance = bal;
+  
+  let mainSymbol = currencyInfo.symbol;
+  let secondarySymbol = currencyInfo.secondarySymbol;
+  let secondaryText = currencyInfo.secondary;
+
+  let mainFormat = (val) => val.toFixed(4);
+  let secondaryFormat = (val) => val.toFixed(4);
+  
+  // Balansı cari dilin valyutasına çeviririk
+  if (lang === 'tr') {
+      mainBalance = bal * rates.AZN_TO_TRY;
+      secondaryBalance = bal * rates.AZN_TO_USD;
+      mainFormat = (val) => val.toFixed(2);
+      secondaryFormat = (val) => val.toFixed(4);
+  } else if (lang === 'en') {
+      mainBalance = bal * rates.AZN_TO_USD;
+      if (currencyInfo.secondary === 'AZN') {
+          secondaryBalance = bal; 
+      }
+      mainFormat = (val) => val.toFixed(4);
+      secondaryFormat = (val) => val.toFixed(4);
+  } else if (lang === 'ru') { // RUS DİLİ
+      mainBalance = bal * rates.AZN_TO_RUB;
+      secondaryBalance = bal * rates.AZN_TO_USD;
+      mainFormat = (val) => val.toFixed(2);
+      secondaryFormat = (val) => val.toFixed(4);
+  } else { // AZ
+      mainBalance = bal;
+      secondaryBalance = bal * rates.AZN_TO_USD;
+  }
+  
+  // Əsas balans
+  document.getElementById('balance').textContent = mainFormat(mainBalance);
+  document.getElementById('balance2').textContent = mainFormat(mainBalance);
+  document.getElementById('currencySymbol').textContent = mainSymbol;
+  document.getElementById('currencySymbol2').textContent = mainSymbol;
+  
+  // Köməkçi balans (USD/AZN)
+  document.getElementById('secondaryBalance').textContent = secondaryFormat(secondaryBalance);
+  document.getElementById('secondaryBalance2').textContent = secondaryFormat(secondaryBalance);
+  document.getElementById('secondaryCurrencySymbol').textContent = secondarySymbol;
+  document.getElementById('secondaryCurrencySymbol2').textContent = secondarySymbol;
+  document.getElementById('secondaryCurrencyText').textContent = secondaryText;
+  document.getElementById('secondaryCurrencyText2').textContent = secondaryText;
+
   document.getElementById('adsCount').textContent=cnt;
   document.getElementById('progress').style.width=(cnt/LIMIT*100)+'%';
   const progressTextSpan = document.getElementById('progressTextSpan');
@@ -541,23 +714,29 @@ function update(){
 function updateTaskButtons() {
     const t = TRANSLATIONS[currentLang];
     
-    taskButtons.forEach(task => {
+    taskButtons.forEach((task, index) => {
         const btn = document.getElementById(task.id);
         if (!btn) return;
+
+        // Mükafat mətnini yenilə
+        const taskRewardKey = `taskReward${index + 1}`;
+        const localizedRewardText = getLocalizedTaskReward(currentLang, AZN_TASK_REWARDS[index]);
+        const rewardEl = btn.parentElement.querySelector(`p[data-translate-key="${taskRewardKey}"]`);
+        if (rewardEl) {
+            rewardEl.innerHTML = t[taskRewardKey](localizedRewardText);
+        }
         
         // LocalStorage-də tamamlanıbsa
         if (localStorage.getItem(task.key)){
-            btn.classList.remove('waiting'); // Əgər gözləmədən çıxarıbsa
+            btn.classList.remove('waiting'); 
             btn.classList.add('completed');
             btn.textContent = t.completed;
             btn.disabled = true; 
         } else {
-            // Əgər düymə hazırda gözləmədə deyilsə, normal vəziyyətinə qaytar.
             if (!btn.classList.contains('waiting')) {
                  btn.classList.remove('completed');
                  btn.disabled = false;
                  
-                 // Düymənin orijinal mətnini bərpa et (Tərcümədən istifadə edərək)
                  const key = btn.getAttribute('data-translate-key');
                  if(t[key]) {
                      btn.textContent = t[key];
@@ -567,29 +746,58 @@ function updateTaskButtons() {
     });
 }
 
-function setPlaceholders(methodType) {
-    const t = TRANSLATIONS[currentLang];
-    const detailsKey = `placeholderDetails_${methodType}`;
-    const amountKey = `placeholderAmount`;
+// Minimum çıxarış məbləğini formatlayan funksiya
+function getLocalizedMinAmount(methodType, lang) {
+    const aznMin = AZN_MIN_WITHDRAW[methodType];
+    const currencyInfo = CURRENCIES[lang];
+    let minAmount = aznMin;
+    let format = (val) => val.toFixed(2); 
 
-    details.placeholder = t[detailsKey] || '';
-    amount.placeholder = t[amountKey] || 'Məbləğ (AZN)';
+    if (lang === 'tr') {
+        minAmount = aznMin * EXCHANGE_RATES.AZN_TO_TRY;
+    } else if (lang === 'en') {
+        minAmount = aznMin * EXCHANGE_RATES.AZN_TO_USD;
+        format = (val) => val.toFixed(4);
+    } else if (lang === 'ru') {
+        minAmount = aznMin * EXCHANGE_RATES.AZN_TO_RUB;
+    } else { // AZN üçün
+        format = (val) => val.toFixed(0); // 5.00 yox, 5 göstərilsin
+    }
+    
+    return `${format(minAmount)} ${currencyInfo.symbol}`;
 }
 
+// Çıxarış forması üçün placeholder-ləri təyin edir
+function setPlaceholders(methodType) {
+    const t = TRANSLATIONS[currentLang];
+    const currency = CURRENCIES[currentLang].main;
+    
+    const localizedMinAmount = getLocalizedMinAmount(methodType, currentLang);
+    const minText = t.minAmount(localizedMinAmount);
+    
+    const detailsKey = `placeholderDetails_${methodType}`;
+    
+    details.placeholder = t[detailsKey] || '';
+    
+    // Placeholder mətnini yenilə
+    // Sadecə minimum məbləğ məlumatını götürür (Məs: 5 ₼)
+    const minTextOnly = localizedMinAmount.trim(); 
+    amount.placeholder = `${t.placeholderAmount} (${currency}) - ${minTextOnly}`;
+}
+
+// Tərcümələri tətbiq edir
 function applyTranslations(lang) {
     const t = TRANSLATIONS[lang];
     if (!t) return;
 
     document.getElementById('pageTitle').textContent = t.pageTitle;
     document.getElementById('currentLangDisplay').textContent = lang.toUpperCase(); 
-    
-    // Ok işarəsini cari dilin yanında göstər
     document.getElementById('langArrow').textContent = '⬇️'; 
 
-    // Aktiv dil düyməsini dropdown-da qeyd et
     document.getElementById('langAzBtn').classList.remove('active');
     document.getElementById('langEnBtn').classList.remove('active');
     document.getElementById('langTrBtn').classList.remove('active');
+    document.getElementById('langRuBtn')?.classList.remove('active');
     
     const langBtnId = `lang${lang.charAt(0).toUpperCase() + lang.slice(1)}Btn`;
     const activeBtn = document.getElementById(langBtnId);
@@ -597,19 +805,39 @@ function applyTranslations(lang) {
         activeBtn.classList.add('active');
     }
 
+    const rewardInfo = getLocalizedReward(lang);
+    
     document.querySelectorAll('[data-translate-key]').forEach(el => {
         const key = el.getAttribute('data-translate-key');
-        if (t[key]) {
+        if (typeof t[key] === 'function') {
+             // Reklam mükafatı
+             if (key === 'adReward') {
+                const formattedRewardText = `<b>${rewardInfo.formattedReward} ${rewardInfo.symbol}</b>`;
+                el.innerHTML = t[key](formattedRewardText);
+             } 
+
+        } else if (t[key]) {
             el.innerHTML = t[key];
         }
     });
+    
+    // Tapşırıq mükafatlarını yenilə
+    updateTaskButtons(); 
 
+    // Çıxarış metodları üzərindəki minimum məbləğləri yenilə
+    document.querySelectorAll('.min-withdraw-label').forEach(label => {
+        const methodType = label.getAttribute('data-min-key');
+        if (methodType) {
+            label.textContent = getLocalizedMinAmount(methodType, lang);
+        }
+    });
+    
     const progressTextSpan = document.getElementById('progressTextSpan');
     if(progressTextSpan) {
         progressTextSpan.textContent = `${cnt}/${LIMIT}`;
     }
     
-    updateTaskButtons(); 
+    update(); // Valyutaları yenilə
 
     document.querySelectorAll('.menu button').forEach(button => {
         const key = button.getAttribute('data-translate-key');
@@ -617,6 +845,10 @@ function applyTranslations(lang) {
             button.textContent = t[key];
         }
     });
+    
+    if (document.getElementById('form').style.display === 'block' && type) {
+        setPlaceholders(type);
+    }
 }
 
 // Açılan menyu funksiyası
@@ -634,16 +866,14 @@ function setLang(lang) {
     
     applyTranslations(lang);
     toggleDropdown(); 
-    
-    if (document.getElementById('form').style.display === 'block') {
-        setPlaceholders(type);
-    }
 }
 
 // Reklam düyməsi Funksiyası
 const adBtn=document.getElementById('adBtn'), msg=document.getElementById('msg');
 adBtn.onclick=()=>{
   const t = TRANSLATIONS[currentLang];
+  const rewardInfo = getLocalizedReward(currentLang);
+  
   if(cnt>=LIMIT){ msg.textContent=t.adLimitReached; return; }
   
   adBtn.disabled=true; 
@@ -663,7 +893,6 @@ adBtn.onclick=()=>{
     s--;
     const timerBar=document.getElementById('timerBar');
     
-    // Barın dolmasını tənzimlə
     if(timerBar){
         const progressPercentage = (10 - s) / 10 * 100;
         const hue = (10 - s) * 36; 
@@ -676,14 +905,15 @@ adBtn.onclick=()=>{
     
     // PUL ƏLAVƏ EDİLMƏSİ (1 saniyə keçdikdə, yəni s==9 olanda)
     if(s === 9 && !rewarded) { 
-        bal+=REWARD; 
+        bal+=AZN_REWARD; // Balans həmişə AZN ilə artırılır
         cnt++; 
         update(); 
         rewarded = true; 
         
         // Mükafat mesajını yaradırıq
         const rewardMsgElement = document.createElement('div');
-        rewardMsgElement.innerHTML = t.rewardAdded;
+        const formattedRewardText = `<b>${rewardInfo.formattedReward} ${rewardInfo.symbol}</b>`;
+        rewardMsgElement.innerHTML = t.rewardAdded(formattedRewardText);
         rewardMsgElement.style.marginTop = '10px';
         rewardMsgElement.style.fontWeight = 'bold';
         rewardMsgElement.id = 'rewardMsg';
@@ -706,23 +936,21 @@ adBtn.onclick=()=>{
     if(s<=0){
       clearInterval(tInterval);
       
-      // Düyməni aktiv et və mesajı təmizlə
       adBtn.disabled=false;
       adBtn.classList.remove('waiting');
       
-      // Mesajı təmizlə
       msg.textContent = ''; 
     }
   },1000);
 };
 
 
-// --- YENİLƏNMİŞ TAPŞIRIQLAR FUNKSİYALARI (GERİ SAYIMSIZ, 3 SANİYƏ GECİKMƏ İLƏ) ---
+// --- TAPŞIRIQLAR FUNKSİYALARI ---
 const taskButtons = [
-    { id: 'joinBtn', key: JOIN_KEY, reward: 0.1, url: 'https://t.me/qazancazicmasi' },
-    { id: 'joinBtn2', key: JOIN_KEY2, reward: 0.1, url: 'https://t.me/qazancazchat' },
-    { id: 'joinBtn3', key: JOIN_KEY3, reward: 0.15, url: 'https://t.me/turaldevelopers' },
-    { id: 'joinBtn4', key: JOIN_KEY4, reward: 0.05, url: 'https://t.me/ads_reklam69' }
+    { id: 'joinBtn', key: JOIN_KEY, reward: AZN_TASK_REWARDS[0], url: 'https://t.me/qazancazicmasi' },
+    { id: 'joinBtn2', key: JOIN_KEY2, reward: AZN_TASK_REWARDS[1], url: 'https://t.me/qazancazchat' },
+    { id: 'joinBtn3', key: JOIN_KEY3, reward: AZN_TASK_REWARDS[2], url: 'https://t.me/turaldevelopers' },
+    { id: 'joinBtn4', key: JOIN_KEY4, reward: AZN_TASK_REWARDS[3], url: 'https://t.me/ads_reklam69' }
 ];
 
 // Bütün tapşırıqları dövr edib klik funksiyasını əlavə edirik
@@ -739,41 +967,33 @@ taskButtons.forEach(task => {
     }
     
     btn.onclick = () => {
-        // Klik olunan zaman təkrar yoxlama
         if (localStorage.getItem(task.key) || btn.disabled) {
-            return; // Əgər artıq tamamlanıbsa və ya rəqabətdədirsə, heç nə etmə.
+            return; 
         }
         
         const t = TRANSLATIONS[currentLang];
 
-        // 1. Kanala/Qrupa aç
         window.open(task.url, '_blank');
         
-        // 2. Düyməni dərhal deaktiv et və "Gözləyin" mesajını göstər
         btn.disabled = true;
         btn.classList.add('waiting'); 
-        btn.textContent = t.wait.replace('{s}', '3'); // "3s gözləyin" kimi göstər
+        btn.textContent = t.wait.replace('{s}', '3');
         
-        // 3. 3 saniyə gözlə
         setTimeout(() => {
             
-            // 4. Pulun əlavə edilməsi
-            bal += task.reward;
+            // Balans həmişə AZN ilə artırılır
+            bal += task.reward; 
             safeSet(BAL_KEY, bal);
             
-            // 5. LocalStorage-də tamamlanmış kimi qeyd et
             localStorage.setItem(task.key, '1');
             
-            // 6. Balansı yenilə
             update();
             
-            // 7. Düyməni "Tamamlandı" et və waiting class-ını sil
             btn.classList.remove('waiting');
             btn.classList.add('completed');
             btn.textContent = t.completed;
             btn.disabled = true;
             
-            // Mükafatın əlavə edildiyi barədə mesaj
             console.log(`✅ +${task.reward} ₼ əlavə olundu!`);
             
         }, 3000); // 3000ms = 3 saniyə
@@ -787,7 +1007,6 @@ function showPage(id, btn){
   document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   
-  // Tapşırıqlar səhifəsinə keçəndə düymələri yenilə
   if (id === 'tasksPage') {
     updateTaskButtons();
   }
@@ -800,9 +1019,6 @@ const details = document.getElementById('details');
 const amount = document.getElementById('amount');
 const alertBox = document.getElementById('alert');
 let type = '';
-
-// YENİ MİNİMUM LİMİT - Bütün operatorlar və bank üçün 5 AZN
-const min = { m10:5, azercell:5, bakcell:5, nar:5, bank:5, usdt:17 };
 
 methods.forEach(m=>{
   m.onclick=()=>{
@@ -828,15 +1044,55 @@ document.getElementById('withdrawBtn').onclick=()=>{
   const amt = parseFloat(amount.value);
   alertBox.style.display='none';
   const t = TRANSLATIONS[currentLang];
+  const currencyInfo = CURRENCIES[currentLang];
 
   if(!type){ showErr(t.methodError); return; }
   if(!det){ showErr(t.detailsError); return; }
   if(isNaN(amt) || amt <= 0){ showErr(t.amountError); return; }
-  if(amt < min[type]){ showErr(t.minAmount.replace('{min}', min[type])); return; }
-  if(amt > bal){ showErr(t.balanceError); return; }
+  
+  // Minimal məbləği cari valyutaya çevir
+  const aznMin = AZN_MIN_WITHDRAW[type];
+  let minAmount = aznMin;
+  
+  if (currentLang === 'tr') {
+    minAmount = aznMin * EXCHANGE_RATES.AZN_TO_TRY;
+  } else if (currentLang === 'en') {
+    minAmount = aznMin * EXCHANGE_RATES.AZN_TO_USD;
+  } else if (currentLang === 'ru') {
+    minAmount = aznMin * EXCHANGE_RATES.AZN_TO_RUB;
+  }
+  
+  // Cari balansı cari valyutaya çevir
+  let currentBalanceInLang = bal; 
+  if (currentLang === 'tr') {
+      currentBalanceInLang = bal * EXCHANGE_RATES.AZN_TO_TRY;
+  } else if (currentLang === 'en') {
+      currentBalanceInLang = bal * EXCHANGE_RATES.AZN_TO_USD;
+  } else if (currentLang === 'ru') {
+      currentBalanceInLang = bal * EXCHANGE_RATES.AZN_TO_RUB;
+  }
+  
+  let format = (val) => val.toFixed(2);
+  if (currentLang === 'en') format = (val) => val.toFixed(4);
+
+  // Minimum limit yoxlaması
+  if(amt < minAmount){ showErr(t.minAmount(getLocalizedMinAmount(type, currentLang))); return; }
+  
+  // Balans yoxlaması
+  if(amt > currentBalanceInLang){ showErr(t.balanceError); return; }
+
+  // Çıxarılacaq məbləği AZN-ə çevir (Çünki balans AZN-də saxlanılır)
+  let withdrawalAmountInAZN = amt;
+  if (currentLang === 'tr') {
+    withdrawalAmountInAZN = amt / EXCHANGE_RATES.AZN_TO_TRY;
+  } else if (currentLang === 'en') {
+    withdrawalAmountInAZN = amt / EXCHANGE_RATES.AZN_TO_USD;
+  } else if (currentLang === 'ru') {
+    withdrawalAmountInAZN = amt / EXCHANGE_RATES.AZN_TO_RUB;
+  }
 
   // Çıxarışın göndərilməsi simulyasiyası
-  bal -= amt;
+  bal -= withdrawalAmountInAZN; // AZN-də çıxarış
   safeSet(BAL_KEY,bal);
   update();
 
