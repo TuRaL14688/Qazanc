@@ -7,21 +7,43 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="//libtl.com/sdk.js" data-zone="10024800" data-sdk="show_10024800"></script>
 <style>
-/* RƏNG SXEMİ DƏYİŞİKLİYİ: AĞ VƏ QIRMIZI */
-:root{
-  --bg-start:#ffffff; 
-  --bg-end:#f0f0f0;   
-  --card-bg:rgba(255,255,255,0.85); 
-  --card-border:rgba(0,0,0,0.1);
-  --btn-gradient-start:#FF416C; 
-  --btn-gradient-end:#FF4B2B;   
-  --btn-shadow:rgba(255,65,108,0.4); 
-  --text-light:#ffffff;
-  --text-dark:#1B1B1B;
-  --accent:#FF0000; 
+/* --- RƏNG DƏYİŞƏNLƏRİ (VARS) --- */
+:root {
+  /* LIGHT TEMA (Ağ/Qırmızı) - Default */
+  --bg-start: #ffffff; 
+  --bg-end: #f0f0f0;   
+  --card-bg: rgba(255, 255, 255, 0.85); 
+  --card-border: rgba(0, 0, 0, 0.1);
+  --text-light: #ffffff;
+  --text-dark: #1B1B1B;
+  --accent: #FF0000; 
+  --menu-bg: rgba(255, 255, 255, 0.15);
+  --progress-bg: rgba(0, 0, 0, 0.08);
+  --input-text: #1B1B1B; /* Input mətni üçün */
+
+  /* Qırmızı Gradientlər */
+  --btn-gradient-start: #FF416C; 
+  --btn-gradient-end: #FF4B2B;   
+  --btn-shadow: rgba(255, 65, 108, 0.4); 
   --secondary-btn-gradient-start: #ffc371; 
   --secondary-btn-gradient-end: #ff5f6d; 
 }
+
+/* DARK TEMA (Qara/Qırmızı) */
+body.dark-theme {
+  --bg-start: #1b1b1b; 
+  --bg-end: #252525;   
+  --card-bg: rgba(45, 45, 45, 0.95); 
+  --card-border: rgba(255, 255, 255, 0.1);
+  --text-light: #ffffff;
+  --text-dark: #f0f0f0;
+  --accent: #FF4B2B; 
+  --menu-bg: rgba(0, 0, 0, 0.3);
+  --progress-bg: rgba(255, 255, 255, 0.15);
+  --input-text: #ffffff; /* Qaranlıq temada input mətni ağ olsun */
+}
+
+/* --- ÜMUMİ STİLLƏR --- */
 *{box-sizing:border-box;margin:0;padding:0;}
 body{
   font-family:'Inter',sans-serif;
@@ -33,6 +55,7 @@ body{
   user-select:none;
   -webkit-user-select:none;
   -webkit-tap-highlight-color:transparent;
+  transition: background-color 0.5s, color 0.5s; 
 }
 @keyframes bgMove{
   0%{background-position:0% 50;}
@@ -43,14 +66,17 @@ body{
 /* Yuxarı boşluğu azaltmaq */
 .container{max-width:480px;margin:auto;padding:20px;padding-top:20px;} 
 
-/* DİL SEÇİMİ (DROPDOWN STİLİ) */
-.lang-switcher-container {
-    position: relative;
+/* DİL VƏ TEMA SEÇİMİ (YENİ DÜZƏNLƏMƏ) */
+.top-controls {
     display: flex;
-    justify-content: flex-end; 
+    justify-content: space-between; /* Sol və Sağ tərəfi ayırır */
+    align-items: center;
     margin-bottom: 20px;
 }
-.lang-current-btn {
+.lang-switcher-container {
+    position: relative;
+}
+.lang-current-btn, .theme-toggle-btn {
     padding: 6px 10px;
     border: 1px solid var(--card-border);
     background: var(--card-bg);
@@ -59,17 +85,23 @@ body{
     cursor: pointer;
     transition: 0.3s;
     border-radius: 10px;
-    margin-left: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     display: flex;
     align-items: center;
+    height: 40px; 
 }
 .lang-current-btn span {
     margin-right: 5px; 
 }
-.lang-current-btn:hover {
+.lang-current-btn:hover, .theme-toggle-btn:hover {
     box-shadow: 0 4px 15px rgba(255,0,0,0.2);
 }
+
+/* Tema keçid simvolu üçün xüsusi stil */
+.theme-icon {
+    font-size: 20px;
+}
+
 .lang-dropdown {
     position: absolute;
     top: 100%; 
@@ -105,16 +137,13 @@ body{
     background: var(--accent);
     color: var(--text-light);
 }
-.lang-dropdown button {
-    text-align: center; 
-}
 
 .page{display:none;animation:fadeIn .4s ease;}
 .page.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 
 /* Balans və Kart Dizaynı */
-.balance-card{
+.balance-card, .ad-card, .task-card{
   background:var(--card-bg);
   border-radius:25px;
   padding:20px 18px;
@@ -123,11 +152,11 @@ body{
   backdrop-filter:blur(14px);
   text-align:center;
   border:1px solid var(--card-border);
-  pointer-events:none;
+  transition: background-color 0.5s, box-shadow 0.5s;
 }
 .balance-card h3{font-size:16px;color:var(--accent);margin-bottom:8px;letter-spacing:0.5px;}
 .balance-card .amount{font-size:32px;font-weight:700;margin-top:5px;color:var(--text-dark);text-shadow:0 2px 5px rgba(0,0,0,0.1);}
-.balance-card .usd{font-size:14px;color:#555;margin-top:4px;}
+.balance-card .usd{font-size:14px;color:var(--text-dark);opacity:0.7;margin-top:4px;}
 
 /* Metod Siyahısı */
 .method-list{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0;justify-content:space-between;}
@@ -146,7 +175,7 @@ body{
     align-items: center;
     justify-content: center;
     height: 100px;
-    position: relative; /* Minimum məbləğ üçün */
+    position: relative;
 }
 .method:hover{transform:scale(1.03);box-shadow:0 0 10px rgba(0,0,0,0.2);}
 .method-logo{
@@ -165,7 +194,6 @@ body{
 .method-text {
     font-size: 14px;
 }
-/* Minimum Çıxarış CSS-i */
 .min-withdraw-label {
     position: absolute;
     bottom: 5px;
@@ -177,10 +205,10 @@ body{
     padding: 1px 4px;
     border-radius: 4px;
 }
-.ad-card{background:var(--card-bg);border-radius:16px;padding:16px 18px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,0.25);backdrop-filter:blur(12px);border:1px solid var(--card-border);margin-bottom:12px;}
+.ad-card{margin-bottom:12px;}
 .ad-card h2{font-size:18px;color:var(--text-dark);margin-bottom:6px;}
 .ad-card p{margin:4px 0;color:var(--text-dark);font-size:13px;}
-.task-card{background:var(--card-bg);border-radius:14px;padding:12px 14px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,0.2);backdrop-filter:blur(12px);border:1px solid var(--card-border);margin-bottom:10px;}
+.task-card{margin-bottom:10px;}
 .task-card h2{font-size:16px;color:var(--text-dark);margin-bottom:4px;}
 .task-card p{margin:2px 0;color:var(--text-dark);font-size:12px;}
 .task-card button{width:100%;margin-top:8px;padding:10px;font-size:13px;font-weight:700;border:none;border-radius:12px;background:linear-gradient(90deg,var(--secondary-btn-gradient-start),var(--secondary-btn-gradient-end)); 
@@ -196,18 +224,30 @@ body{
 }
 
 .stats{display:flex;justify-content:space-around;margin-top:12px;}
-.stat{background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 16px;}
+.stat{background:var(--progress-bg);border-radius:10px;padding:10px 16px;}
 .stat span{display:block;font-size:16px;font-weight:700;color:var(--text-dark);}
-.stat label{font-size:11px;color:#666;}
-.progress{height:10px;background:rgba(0,0,0,0.08);border-radius:6px;overflow:hidden;margin-top:12px;}
+.stat label{font-size:11px;color:var(--text-dark);opacity:0.7;}
+.progress{height:10px;background:var(--progress-bg);border-radius:6px;overflow:hidden;margin-top:12px;}
 .progress-fill{height:100%;background:var(--accent);width:0%;transition:width .4s;} 
 .ad-btn{width:100%;margin-top:12px;padding:12px;font-size:14px;font-weight:700;border:none;border-radius:14px;color:var(--text-light);cursor:pointer;transition:0.3s;background:linear-gradient(90deg,var(--btn-gradient-start),var(--btn-gradient-end));box-shadow:0 0 16px var(--btn-shadow);}
 .ad-btn:hover:not(.waiting){transform:scale(1.03);box-shadow:0 0 20px var(--btn-shadow);}
-.menu{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);width:92%;display:flex;justify-content:space-around;background:rgba(255,255,255,0.15);padding:10px;border-radius:22px;box-shadow:0 6px 20px rgba(0,0,0,.3);}
+.menu{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);width:92%;display:flex;justify-content:space-around;background:var(--menu-bg);padding:10px;border-radius:22px;box-shadow:0 6px 20px rgba(0,0,0,.3);backdrop-filter:blur(8px);}
 .menu button{flex:1;margin:0 6px;padding:12px;border:none;border-radius:16px;background:linear-gradient(90deg,var(--btn-gradient-start),var(--btn-gradient-end));color:var(--text-light);font-weight:700;transition:0.3s;}
 .menu button.active{background:linear-gradient(90deg,var(--secondary-btn-gradient-start),var(--secondary-btn-gradient-end));box-shadow:0 0 18px rgba(255,95,109,0.6);}
 #form{display:none;margin-top:12px;}
-#form input{width:100%;padding:12px;margin:6px 0;border-radius:12px;border:1px solid #ccc;}
+#form input{
+    width:100%;
+    padding:12px;
+    margin:6px 0;
+    border-radius:12px;
+    border:1px solid var(--card-border);
+    background:var(--card-bg);
+    color:var(--input-text); /* Tema dəyişəni ilə idarə olunur */
+}
+#form input::placeholder {
+    color: var(--input-text); 
+    opacity: 0.5; /* Placeholder-i bir az solğun et */
+}
 #form button{width:100%;padding:14px;margin-top:8px;border:none;border-radius:14px;background:linear-gradient(90deg,var(--secondary-btn-gradient-start),var(--secondary-btn-gradient-end));color:var(--text-light);font-weight:700;cursor:pointer;}
 .alert{margin-top:6px;padding:10px;border-radius:10px;display:none;}
 .alert.error{background:#f8d7da;color:#842029;}
@@ -238,7 +278,7 @@ body{
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.5;}}
 </style>
 </head>
-<body>
+<body id="body">
 <div id="loadingScreen">
   <div class="loader-box">
     <div class="shine-circle"></div>
@@ -253,18 +293,25 @@ body{
 
 <div class="container">
   
-  <div class="lang-switcher-container">
-    <button class="lang-current-btn" onclick="toggleDropdown()">
-        <span id="currentLangDisplay">AZ</span>
-        <span id="langArrow"></span>
+  <div class="top-controls">
+    <button class="theme-toggle-btn" onclick="toggleTheme()">
+        <span id="themeIcon" class="theme-icon">🔆</span>
     </button>
-    <div class="lang-dropdown" id="langDropdown">
-        <button onclick="setLang('az')" id="langAzBtn">AZ</button>
-        <button onclick="setLang('en')" id="langEnBtn">EN</button>
-        <button onclick="setLang('tr')" id="langTrBtn">TR</button>
-        <button onclick="setLang('ru')" id="langRuBtn">RU</button>
+    
+    <div class="lang-switcher-container">
+        <button class="lang-current-btn" onclick="toggleDropdown()">
+            <span id="currentLangDisplay">AZ</span>
+            <span id="langArrow"></span>
+        </button>
+        <div class="lang-dropdown" id="langDropdown">
+            <button onclick="setLang('az')" id="langAzBtn">AZ</button>
+            <button onclick="setLang('en')" id="langEnBtn">EN</button>
+            <button onclick="setLang('tr')" id="langTrBtn">TR</button>
+            <button onclick="setLang('ru')" id="langRuBtn">RU</button>
+        </div>
     </div>
   </div>
+  
   <div id="adsPage" class="page active">
     <div class="balance-card">
       <h3 data-translate-key="currentBalance">Balans</h3>
@@ -315,7 +362,7 @@ body{
       <div class="amount"><span id="balance2">0.0000</span> <span id="currencySymbol2">₼</span></div>
       <div class="usd"><span id="secondaryCurrencySymbol2">$</span><span id="secondaryBalance2">0.0000</span> <span id="secondaryCurrencyText2">USD</span></div>
     </div>
-    <h2 style="text-align:center;margin-bottom:12px;color:#000000;" data-translate-key="withdrawTitle">Çıxarış</h2>
+    <h2 style="text-align:center;margin-bottom:12px;color:var(--text-dark);" data-translate-key="withdrawTitle">Çıxarış</h2>
     <div class="method-list" id="methods">
       
       <div class="method" data-type="m10">
@@ -366,17 +413,44 @@ body{
   <button onclick="showPage('walletPage',this)" data-translate-key="wallet">Cüzdan</button>
 </div>
 <script>
+// --- TEMA İDARƏETMƏSİ ---
+const THEME_KEY = 'theme';
+const body = document.getElementById('body');
+const themeIcon = document.getElementById('themeIcon');
+
+function applyTheme(isDark) {
+    if (isDark) {
+        body.classList.add('dark-theme');
+        themeIcon.textContent = '🌙'; // Qaranlıq üçün ay
+        safeSet(THEME_KEY, 'dark');
+    } else {
+        body.classList.remove('dark-theme');
+        themeIcon.textContent = '🔆'; // Açıq üçün günəş
+        safeSet(THEME_KEY, 'light');
+    }
+}
+
+function toggleTheme() {
+    const isDark = body.classList.contains('dark-theme');
+    applyTheme(!isDark);
+}
+
+// Səhifə yüklənəndə temani tətbiq et
+const savedTheme = safeGet(THEME_KEY, 'light');
+applyTheme(savedTheme === 'dark');
+
+
 // --- VALYUTA VƏ MƏZƏNNƏLƏR ---
 const EXCHANGE_RATES = {
     AZN_TO_USD: 0.59, 
     AZN_TO_TRY: 25.00,  
-    AZN_TO_RUB: 46.45 // YENİ MƏZƏNNƏ: 1 AZN = 46.45 RUB
+    AZN_TO_RUB: 46.45 
 };
 const CURRENCIES = {
     'az': { main: 'AZN', symbol: '₼', secondary: 'USD', secondarySymbol: '$' },
     'tr': { main: 'TRY', symbol: '₺', secondary: 'USD', secondarySymbol: '$' },
     'en': { main: 'USD', symbol: '$', secondary: 'AZN', secondarySymbol: '₼' },
-    'ru': { main: 'RUB', symbol: '₽', secondary: 'USD', secondarySymbol: '$' } // YENİ VALYUTA
+    'ru': { main: 'RUB', symbol: '₽', secondary: 'USD', secondarySymbol: '$' }
 };
 const AZN_REWARD = 0.002;
 const AZN_TASK_REWARDS = [0.1, 0.1, 0.15, 0.05]; 
@@ -460,7 +534,7 @@ const TRANSLATIONS = {
         methodError: 'Metod seçin',
         detailsError: 'Detalları daxil edin',
         amountError: 'Məbləği düzgün daxil edin',
-        minAmount: (min) => `Minimum məbləğ ${min}`, // AZN üçün düzəliş edildi
+        minAmount: (min) => `Minimum məbləğ ${min}`, 
         balanceError: 'Balans kifayət etmir',
         withdrawSuccess: '✅ Çıxarış göndərildi! 48 saat ərzində yerinə yetiriləcək.',
         home: 'Ev',
@@ -569,7 +643,7 @@ const TRANSLATIONS = {
         placeholderAmount: 'Miktar',
         completed: 'Tamamlandı', 
     },
-    'ru': { // RUS DİLİ ƏLAVƏ EDİLDİ
+    'ru': { 
         pageTitle: 'Заработок AZ',
         loading: 'Загрузка...',
         currentBalance: 'Баланс',
@@ -678,7 +752,7 @@ function update(){
       }
       mainFormat = (val) => val.toFixed(4);
       secondaryFormat = (val) => val.toFixed(4);
-  } else if (lang === 'ru') { // RUS DİLİ
+  } else if (lang === 'ru') { 
       mainBalance = bal * rates.AZN_TO_RUB;
       secondaryBalance = bal * rates.AZN_TO_USD;
       mainFormat = (val) => val.toFixed(2);
@@ -761,7 +835,7 @@ function getLocalizedMinAmount(methodType, lang) {
     } else if (lang === 'ru') {
         minAmount = aznMin * EXCHANGE_RATES.AZN_TO_RUB;
     } else { // AZN üçün
-        format = (val) => val.toFixed(0); // 5.00 yox, 5 göstərilsin
+        format = (val) => val.toFixed(0); 
     }
     
     return `${format(minAmount)} ${currencyInfo.symbol}`;
@@ -779,8 +853,6 @@ function setPlaceholders(methodType) {
     
     details.placeholder = t[detailsKey] || '';
     
-    // Placeholder mətnini yenilə
-    // Sadecə minimum məbləğ məlumatını götürür (Məs: 5 ₼)
     const minTextOnly = localizedMinAmount.trim(); 
     amount.placeholder = `${t.placeholderAmount} (${currency}) - ${minTextOnly}`;
 }
